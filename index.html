@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>NORTE RPG — La Expedición de Michael Carter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg-outer: #E0F2FE;
+      --bg-app: #F4FAFF;
+      --card-bg: #FFFFFF;
+      --border: #BAE6FD;
+      --border-soft: #E0F2FE;
+      --sky-primary: #38BDF8;
+      --sky-bright: #7DD3FC;
+      --sky-soft: #E0F2FE;
+      --sky-ultra-soft: #F0F9FF;
+      --sky-accent: #0EA5E9;
+      --navy: #0F172A;
+      --slate: #475569;
+      --slate-light: #64748B;
+      --emerald: #10B981;
+      --emerald-soft: #ECFDF5;
+      --amber: #F59E0B;
+      --amber-soft: #FFFBEB;
+      --rose: #F43F5E;
+      --rose-soft: #FFF1F2;
+      --shadow-sm: 0 4px 12px rgba(56, 189, 248, 0.08);
+      --shadow-md: 0 10px 28px rgba(14, 165, 233, 0.12);
+      --shadow-lg: 0 20px 44px rgba(14, 165, 233, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #E0F2FE 0%, #F0F9FF 100%);
+      color: var(--navy);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    #app-shell {
+      width: 100%;
+      max-width: 440px;
+      min-height: 100vh;
+      background-color: var(--bg-app);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 50px rgba(14, 165, 233, 0.16);
+      overflow-x: hidden;
+    }
+
+    /* TOPBAR: LOGO + MAPA DE MONTAÑA DESAHOGADO */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1.5px solid var(--border);
+      padding: 12px 16px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .topbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      color: var(--sky-accent);
+    }
+
+    .brand-logo-img {
+      height: 44px;
+      width: 185px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-fallback {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
+      color: #FFFFFF;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+    }
+
+    .expedition-tag {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--sky-accent);
+      background: var(--sky-ultra-soft);
+      border: 1px solid var(--border);
+      padding: 5px 11px;
+      border-radius: 999px;
+    }
+
+    /* MAPA DE MONTAÑA SVG */
+    .mountain-map-box {
+      background: linear-gradient(180deg, #E0F2FE 0%, #F0F9FF 75%, #FFFFFF 100%);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 8px 10px 6px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mountain-svg {
+      width: 100%;
+      height: 82px;
+      display: block;
+      overflow: visible;
+    }
+
+    .trail-path-bg {
+      fill: none;
+      stroke: #BAE6FD;
+      stroke-width: 3;
+      stroke-dasharray: 5 5;
+      stroke-linecap: round;
+    }
+
+    .trail-path-active {
+      fill: none;
+      stroke: var(--sky-accent);
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .camp-node {
+      transition: all 0.4s ease;
+    }
+
+    .camp-label {
+      font-size: 9px;
+      font-weight: 800;
+      fill: var(--slate);
+      text-anchor: middle;
+    }
+
+    .camp-label.active {
+      fill: var(--sky-accent);
+    }
+
+    .camp-label.done {
+      fill: var(--emerald);
+    }
+
+    #michael-hiker {
+      transition: transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .hiker-bob {
+      animation: hikerBob 1.8s ease-in-out infinite;
+    }
+
+    @keyframes hikerBob {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-3px); }
+    }
+
+    /* Floating Stat Delta Toast */
+    .delta-float {
+      position: fixed;
+      top: 148px;
+      left: 50%;
+      transform: translateX(-50%) translateY(0);
+      background: var(--sky-accent);
+      color: #FFFFFF;
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-lg);
+      z-index: 60;
+      pointer-events: none;
+      animation: floatUpFade 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes floatUpFade {
+      0% { opacity: 0; transform: translateX(-50%) translateY(14px) scale(0.92); }
+      18% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+      80% { opacity: 1; transform: translateX(-50%) translateY(-6px) scale(1); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-18px) scale(0.96); }
+    }
+
+    /* Main Screen Container: Aprovecha todo el alto disponible sin huecos muertos */
+    .screen {
+      flex: 1;
+      padding: 18px 16px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      animation: screenEnter 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .screen-body {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    @keyframes screenEnter {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* PANEL EXPLICATIVO DE INDICADORES EN EL ESPACIO INFERIOR */
+    .indicators-dock {
+      background: #FFFFFF;
+      border-top: 1.5px solid var(--border);
+      padding: 12px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 -6px 20px rgba(14, 165, 233, 0.06);
+    }
+
+    .indicators-dock-title {
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--sky-accent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .indicators-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .indicator-card {
+      background: var(--sky-ultra-soft);
+      border: 1.5px solid var(--border-soft);
+      border-radius: 14px;
+      padding: 9px 9px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .indicator-card.bump {
+      transform: scale(1.05);
+      background: var(--sky-soft);
+      border-color: var(--sky-primary);
+    }
+
+    .ind-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .ind-name {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--sky-accent);
+      line-height: 1.2;
+    }
+
+    .ind-desc {
+      font-size: 10px;
+      color: var(--slate);
+      line-height: 1.28;
+    }
+
+    .ind-bar-bg {
+      height: 5px;
+      background: #DBEAFE;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 2px;
+    }
+
+    .ind-bar-fill {
+      height: 100%;
+      background: var(--sky-accent);
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+
+    /* NORA DIALOGUE: SIN RECORTES, CUERPO COMPLETO Y MUY VISIBLE */
+    .nora-dialogue {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      padding: 14px 16px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .nora-dialogue.happy {
+      background: linear-gradient(135deg, #E0F2FE 0%, #FFFFFF 100%);
+      border-color: var(--sky-primary);
+    }
+
+    .nora-avatar-box {
+      width: 104px;
+      height: 112px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #E0F2FE 0%, #F0F9FF 100%);
+      border: 2.5px solid var(--sky-bright);
+      padding: 0;
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+      animation: noraBreathe 3.2s ease-in-out infinite;
+    }
+
+    @keyframes noraBreathe {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .nora-avatar-box.bounce {
+      animation: noraPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes noraPop {
+      0% { transform: scale(0.9); }
+      60% { transform: scale(1.04); }
+      100% { transform: scale(1); }
+    }
+
+    .nora-avatar-box img {
+      width: 138%;
+      height: 138%;
+      object-fit: contain;
+      transform: translateY(6%);
+      display: block;
+    }
+
+    .nora-speaker {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--sky-accent);
+      margin-bottom: 5px;
+    }
+
+    .nora-speech {
+      font-size: 14px;
+      color: var(--navy);
+      font-weight: 500;
+      line-height: 1.5;
+      min-height: 52px;
+    }
+
+    .typing-cursor::after {
+      content: "▋";
+      color: var(--sky-primary);
+      animation: blinkCursor 0.7s infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes blinkCursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Typography & Cards */
+    .eyebrow {
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--sky-accent);
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.22;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+    }
+
+    h2 {
+      font-size: 19px;
+      font-weight: 800;
+      line-height: 1.28;
+      letter-spacing: -0.015em;
+    }
+
+    .subtitle {
+      font-size: 13.5px;
+      color: var(--slate);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-soft);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Character Sheet Card (Azul cielo luminoso) */
+    .char-sheet {
+      background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
+      color: #FFFFFF;
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .char-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .char-class {
+      background: rgba(255, 255, 255, 0.25);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .char-stats-mini {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 10px;
+      border-radius: 14px;
+      text-align: center;
+    }
+
+    /* =========================================================================
+       MECÁNICA TIPO REIGNS: CARTA FÍSICA 3D VOLTEABLE (rotateY(180deg))
+       ========================================================================= */
+    .reigns-scene {
+      perspective: 1100px;
+      width: 100%;
+    }
+
+    .reigns-card {
+      width: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.72s cubic-bezier(0.34, 1.36, 0.64, 1);
+    }
+
+    .reigns-card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .reigns-face {
+      width: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 26px;
+      padding: 20px 18px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .reigns-front {
+      background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 36%);
+    }
+
+    .reigns-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-height: 100%;
+      transform: rotateY(180deg);
+      justify-content: space-between;
+      text-align: center;
+      background: linear-gradient(180deg, #E0F2FE 0%, #FFFFFF 45%);
+      border-color: var(--sky-primary);
+    }
+
+    .reigns-back.blocked-back {
+      background: linear-gradient(180deg, #FFFBEB 0%, #FFFFFF 45%);
+      border-color: var(--amber);
+    }
+
+    .reigns-emblem {
+      width: 74px;
+      height: 74px;
+      border-radius: 22px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
+      border: 2.5px solid #FFFFFF;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--sky-accent);
+    }
+
+    .reigns-choices {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .swipe-btn {
+      width: 100%;
+      background: var(--sky-ultra-soft);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 13px 15px;
+      text-align: left;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .swipe-btn:hover {
+      border-color: var(--sky-primary);
+      background: var(--sky-soft);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .swipe-btn:active {
+      transform: scale(0.98);
+    }
+
+    .swipe-dir-badge {
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--sky-accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 3px;
+    }
+
+    .swipe-btn.warn-choice .swipe-dir-badge {
+      color: var(--amber);
+    }
+
+    /* Option buttons para pantallas iniciales */
+    .option-btn {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      text-align: left;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .option-btn:hover {
+      border-color: var(--sky-primary);
+      background: var(--sky-ultra-soft);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .option-btn.selected {
+      border-color: var(--sky-accent);
+      background: var(--sky-soft);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+    .option-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--navy);
+      display: block;
+    }
+
+    .option-desc {
+      font-size: 12.5px;
+      color: var(--slate);
+      display: block;
+      margin-top: 2px;
+    }
+
+    .stat-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .stat-tag {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .tag-pos { background: var(--emerald-soft); color: var(--emerald); }
+    .tag-neg { background: var(--rose-soft); color: var(--rose); }
+    .tag-warn { background: var(--amber-soft); color: var(--amber); }
+
+    /* Pills & Bars */
+    .pill {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .pill-sky { background: var(--sky-soft); color: var(--sky-accent); }
+    .pill-navy { background: #F1F5F9; color: var(--slate); }
+    .pill-green { background: var(--emerald-soft); color: var(--emerald); }
+    .pill-amber { background: var(--amber-soft); color: var(--amber); }
+
+    .bar-item-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .bar-track {
+      height: 10px;
+      background: var(--sky-soft);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--sky-primary);
+      width: 0%;
+      transition: width 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .bar-fill.accent { background: var(--sky-accent); }
+
+    /* Strengths / Buffs */
+    .buff-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .buff-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .buff-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--sky-soft);
+      color: var(--sky-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Buttons (Azul cielo claro vibrante) */
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 16px;
+      padding: 15px 20px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 18px rgba(14, 165, 233, 0.28);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.04);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary:active { transform: scale(0.98); }
+
+    .btn-secondary {
+      width: 100%;
+      background: var(--sky-soft);
+      color: var(--sky-accent);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.18s ease;
+    }
+
+    .btn-secondary:hover { background: #BAE6FD; }
+
+    .btn-amber {
+      width: 100%;
+      background: var(--amber);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 16px;
+      padding: 14px 20px;
+      font-family: inherit;
+      font-size: 14.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.28);
+    }
+
+    /* Two Futures Grid */
+    .futures-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .future-col {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-soft);
+      border-radius: 18px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .future-col.highlight {
+      border-color: var(--sky-primary);
+      background: linear-gradient(180deg, #E0F2FE 0%, #FFFFFF 100%);
+    }
+
+    .sim-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .sim-btn {
+      background: var(--card-bg);
+      border: 1.5px solid var(--sky-primary);
+      color: var(--sky-accent);
+      border-radius: 14px;
+      padding: 12px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.18s ease;
+    }
+
+    .sim-btn.active {
+      background: var(--sky-accent);
+      color: #FFFFFF;
+    }
+
+    /* Reverso de la carta: Nora completa y sin recortes */
+    .back-nora-badge {
+      width: 102px;
+      height: 108px;
+      border-radius: 24px;
+      margin: 0 auto;
+      background: #E0F2FE;
+      border: 2.5px solid var(--sky-primary);
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .reigns-back.blocked-back .back-nora-badge {
+      background: var(--amber-soft);
+      border-color: var(--amber);
+    }
+
+    .back-nora-badge img {
+      width: 138%;
+      height: 138%;
+      object-fit: contain;
+      transform: translateY(6%);
+    }
+  </style>
+</head>
+<body>
+  <div id="app-shell">
+    <!-- CABECERA DESAHOGADA: SOLO LOGO NORTE + MAPA DE MONTAÑA -->
+    <header class="topbar">
+      <div class="topbar-row">
+        <div class="brand">
+          <img
+            src="./norte-logo.jpg"
+            alt="NORTE"
+            class="brand-logo-img"
+            onerror="this.style.display='none';document.getElementById('brand-text-fallback').style.display='inline-flex';"
+          />
+          <span id="brand-text-fallback" class="brand-fallback" style="display:none;">
+            <i data-lucide="compass" style="width:16px;height:16px;"></i>
+            NORTE
+          </span>
+        </div>
+
+        <span class="expedition-tag">Expedición · Michael Carter</span>
+      </div>
+
+      <!-- MAPA DE MONTAÑA SVG CON 5 NODOS (BASE -> ETAPA 1 -> ETAPA 2 -> ETAPA 3 -> CUMBRE) -->
+      <div class="mountain-map-box">
+        <svg class="mountain-svg" viewBox="0 0 380 82">
+          <!-- Silueta suave de montañas al fondo -->
+          <polygon points="0,82 65,32 135,82" fill="#BAE6FD" opacity="0.35" />
+          <polygon points="95,82 190,18 285,82" fill="#7DD3FC" opacity="0.32" />
+          <polygon points="230,82 335,10 380,45 380,82" fill="#38BDF8" opacity="0.25" />
+
+          <!-- Sendero discontinuo de fondo -->
+          <path id="trail-bg" class="trail-path-bg" d="M 32,62 Q 75,58 112,50 T 192,40 T 272,28 T 348,15" />
+          <!-- Sendero iluminado de progreso -->
+          <path id="trail-active" class="trail-path-active" d="M 32,62 Q 75,58 112,50 T 192,40 T 272,28 T 348,15" />
+
+          <!-- Contenedor dinámico de los 5 campamentos -->
+          <g id="mountain-nodes"></g>
+
+          <!-- Avatar móvil de Michael -->
+          <g id="michael-hiker" transform="translate(32, 62)">
+            <g class="hiker-bob">
+              <circle cx="0" cy="-16" r="11" fill="#0EA5E9" stroke="#FFFFFF" stroke-width="2" />
+              <text x="0" y="-12.5" text-anchor="middle" font-size="11" fill="#FFFFFF">🧗</text>
+              <polygon points="-4,-5 4,-5 0,0" fill="#0EA5E9" />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main id="screen-container" class="screen"></main>
+
+    <!-- DOCK INFERIOR: EXPLICACIÓN CLARA DE LOS 3 INDICADORES PARA CUALQUIER EDAD -->
+    <footer class="indicators-dock">
+      <div class="indicators-dock-title">
+        <span>Estado de tu tranquilidad financiera</span>
+        <span>0 a 100 pts</span>
+      </div>
+      <div class="indicators-grid">
+        <div class="indicator-card" id="card-shield">
+          <div class="ind-head">
+            <span>🛡️</span>
+            <span id="val-shield">45</span>
+          </div>
+          <div class="ind-name">Colchón Seguro</div>
+          <div class="ind-desc">Dinero protegido para imprevistos</div>
+          <div class="ind-bar-bg"><div class="ind-bar-fill" id="bar-shield" style="width:45%"></div></div>
+        </div>
+
+        <div class="indicator-card" id="card-energy">
+          <div class="ind-head">
+            <span>⚡</span>
+            <span id="val-energy">50</span>
+          </div>
+          <div class="ind-name">Holgura Mensual</div>
+          <div class="ind-desc">Respiro libre en tu sueldo cada mes</div>
+          <div class="ind-bar-bg"><div class="ind-bar-fill" id="bar-energy" style="width:50%"></div></div>
+        </div>
+
+        <div class="indicator-card" id="card-compass">
+          <div class="ind-head">
+            <span>🧭</span>
+            <span id="val-compass">40</span>
+          </div>
+          <div class="ind-name">Rumbo Futuro</div>
+          <div class="ind-desc">Ahorro listo para tu casa y retiro</div>
+          <div class="ind-bar-bg"><div class="ind-bar-fill" id="bar-compass" style="width:40%"></div></div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    /**
+     * =========================================================================
+     * RUTAS DE IMÁGENES SVG DE NORA
+     * =========================================================================
+     */
+    const NORA_SPRITES = {
+      normal: "./norasvg/nora-normal.svg",
+      feliz: "./norasvg/nora-feliz.svg",
+      feliz2: "./norasvg/nora-feliz-2.svg",
+      feliz3: "./norasvg/nora-feliz-3.svg"
+    };
+
+    const NORA_ROLE_LABEL = "NORA · Tu guía hacia el norte";
+
+    /**
+     * =========================================================================
+     * NODOS DEL MAPA DE MONTAÑA
+     * =========================================================================
+     */
+    const MOUNTAIN_CAMPS = [
+      { id: 0, label: "Base", x: 32, y: 62 },
+      { id: 1, label: "Etapa 1", x: 112, y: 50 },
+      { id: 2, label: "Etapa 2", x: 192, y: 40 },
+      { id: 3, label: "Etapa 3", x: 272, y: 28 },
+      { id: 4, label: "Cumbre", x: 348, y: 15 }
+    ];
+
+    /**
+     * =========================================================================
+     * MICHAEL_RPG_DATA: Datos reales de Michael Carter + Cartas Reigns
+     * =========================================================================
+     */
+    const MICHAEL_DATA = {
+      id: "michael-carter",
+      name: "Michael Carter",
+      age: 37,
+      city: "Austin, TX",
+      rpgClass: "Ahorrador Disciplinado",
+      mainQuest: "Comprar casa en enero de 2027 sin frenar tu retiro a los 58",
+      introSpeech: "¡Bienvenido a tu expedición financiera, Michael! Soy NORA, tu guía hacia el norte. Subiremos juntos hasta la cumbre tomando decisiones claras carta a carta.",
+      concerns: [
+        {
+          id: "casa",
+          label: "Comprar mi casa en enero de 2027",
+          desc: "Asegurar los $113,300 de entrada sin quedarme sin colchón.",
+          stageOrder: ["liquidez", "deuda", "retiro"],
+          recommendedActionIndex: 0,
+          delta: { shield: 5, energy: 0, compass: 10 }
+        },
+        {
+          id: "colchon",
+          label: "Blindar mi tranquilidad ante imprevistos",
+          desc: "Proteger mi sueldo de $180,000 y evitar vender bolsa con prisa.",
+          stageOrder: ["liquidez", "deuda", "retiro"],
+          recommendedActionIndex: 1,
+          delta: { shield: 12, energy: 0, compass: 3 }
+        },
+        {
+          id: "retiro",
+          label: "Retirarme a los 58 años con holgura",
+          desc: "Hacer que mis ahorros duren hasta los 91 sin quedarme corto.",
+          stageOrder: ["retiro", "deuda", "liquidez"],
+          recommendedActionIndex: 2,
+          delta: { shield: 0, energy: 3, compass: 12 }
+        }
+      ],
+      buffs: [
+        {
+          icon: "briefcase",
+          title: "Poder de Ingresos ($180,000/año)",
+          detail: "Ahorras $43,000 anuales entre inversión y retiro. Una base sólida para escalar.",
+          bonus: "+15 Capacidad"
+        },
+        {
+          icon: "gift",
+          title: "Bonus de Empresa al 100%",
+          detail: "Capturas íntegros los $7,000 anuales gratuitos que aporta tu empresa a tu retiro.",
+          bonus: "+$7,000/año"
+        },
+        {
+          icon: "shield-check",
+          title: "Carga de Deuda Ligera (6.3%)",
+          detail: "Tus cuotas actuales apenas consumen un 6.3% de tus ingresos mensuales.",
+          bonus: "Bajo Riesgo"
+        }
+      ],
+      stages: {
+        liquidez: {
+          cardTag: "CARTA DE LIQUIDEZ · 2027",
+          icon: "home",
+          title: "La Entrada de tu Casa",
+          noraHint: "Tienes $30,000 en efectivo, pero en enero de 2027 necesitas $113,300 para la entrada y $3,500 para tus vacaciones.",
+          bars: [
+            { label: "Efectivo disponible hoy", display: "$30,000", pct: 26, color: "accent" },
+            { label: "Meta enero 2027 (Casa + Viaje)", display: "$116,800", pct: 100, color: "" }
+          ],
+          options: [
+            {
+              dir: "← Deslizar a la izquierda · En tu plan",
+              label: "Separar el dinero de la casa de la bolsa",
+              desc: "Evita vender acciones si el mercado cae justo antes de comprar.",
+              simulated: true,
+              delta: { shield: 15, energy: 5, compass: 12 },
+              sprite: "feliz",
+              resultTitle: "¡Jugada Maestra!",
+              resultText: "Al apartar ese dinero en una cuenta segura, blindas la compra de tu casa en enero de 2027 frente a cualquier caída bursátil."
+            },
+            {
+              dir: "Deslizar a la derecha → · Cambio de fecha",
+              label: "Aplazar la compra de la casa 2 años",
+              desc: "Mover la compra fuera de enero de 2027 para juntar más caja.",
+              simulated: false,
+              delta: null,
+              sprite: "normal",
+              resultTitle: "Fuera de tu plan actual",
+              resultText: "No podemos simular ni continuar por aquí porque aplazar la compra 2 años no está incluido en tu plan financiero. Habla con tu gestor para recalcular esta fecha en tu modelo y elige una opción de tu plan."
+            }
+          ]
+        },
+        deuda: {
+          cardTag: "CARTA DE DEUDA · 20% TAE",
+          icon: "credit-card",
+          title: "La Tarjeta Amex Platinum",
+          noraHint: "Arrastras $3,500 en tu tarjeta al 20% de interés anual mientras tu flujo anual va $8,336 ajustado.",
+          bars: [
+            { label: "Tarjeta Amex al 20% de interés", display: "$3,500", pct: 14, color: "" },
+            { label: "Préstamo coche y estudios (bajo interés)", display: "$25,000", pct: 86, color: "accent" }
+          ],
+          options: [
+            {
+              dir: "← Deslizar a la izquierda · Ataque directo",
+              label: "Liquidar los $3,500 antes de invertir más",
+              desc: "Eliminar el interés del 20% y liberar $200/mes de cuota.",
+              simulated: true,
+              delta: { shield: 8, energy: 18, compass: 8 },
+              sprite: "feliz2",
+              resultTitle: "¡Lastre Eliminado!",
+              resultText: "Quitar un interés del 20% equivale a ganar un 20% garantizado y libera $200 cada mes en tu presupuesto."
+            },
+            {
+              dir: "Deslizar a la derecha → · Ritmo actual",
+              label: "Seguir pagando $200/mes hasta julio de 2028",
+              desc: "Mantener el calendario proyectado actualmente en tu plan.",
+              simulated: true,
+              delta: { shield: 0, energy: -8, compass: 0 },
+              sprite: "normal",
+              resultTitle: "Camino Lento",
+              resultText: "Terminarás de pagarla en julio de 2028 según tu calendario actual, pero perderás holgura mensual pagando intereses."
+            }
+          ]
+        },
+        retiro: {
+          cardTag: "CARTA DE HORIZONTE · 58 AÑOS",
+          icon: "compass",
+          title: "Tu Retiro Anticipado",
+          noraHint: "Tus ahorros líquidos cubrirían hasta los 85 años (6 años antes del final de tu plan a los 91).",
+          bars: [
+            { label: "Cobertura actual de ahorros líquidos (hasta 85)", display: "27 años", pct: 82, color: "" },
+            { label: "Horizonte completo del plan (hasta 91)", display: "33 años", pct: 100, color: "accent" }
+          ],
+          options: [
+            {
+              dir: "← Deslizar a la izquierda · En tu plan",
+              label: "Subir el ahorro de retiro por fases tras la casa",
+              desc: "Ir cerrando la brecha de $20,231/año sin ahogar el presente.",
+              simulated: true,
+              delta: { shield: 10, energy: 5, compass: 20 },
+              sprite: "feliz3",
+              resultTitle: "¡Horizonte Despejado!",
+              resultText: "Tu plan estima que sumar $20,231/año cierra por completo la brecha de $1,177,586 a los 58 años. Hacerlo por fases es totalmente viable."
+            },
+            {
+              dir: "Deslizar a la derecha → · Cambio de edad",
+              label: "Retrasar mi retiro de los 58 a los 62 años",
+              desc: "Modificar la edad de jubilación registrada en tu plan.",
+              simulated: false,
+              delta: null,
+              sprite: "normal",
+              resultTitle: "Fuera de tu plan actual",
+              resultText: "No podemos simular ni avanzar con este cambio porque retrasar tu retiro a los 62 años no está incluido en tu plan. Habla con tu gestor para actualizar tu edad de retiro y elige una opción contemplada en tu plan."
+            }
+          ]
+        }
+      },
+      randomEvent: {
+        cardTag: "CARTA DE TORMENTA · IMPREVISTO",
+        icon: "cloud-lightning",
+        title: "Imprevisto en Austin ($4,200)",
+        desc: "Antes de llegar a la cumbre, surge una factura médica y de coche de $4,200 fuera del presupuesto del mes.",
+        goodOutcome: {
+          badge: "🛡️ Colchón Seguro Resistente",
+          title: "¡Tormenta Superada!",
+          text: "Tu Colchón Seguro absorbe el golpe: cubres los $4,200 con tu reserva líquida sin tocar tus inversiones ni usar la tarjeta al 20%.",
+          delta: { shield: 5, energy: 5, compass: 5 },
+          sprite: "feliz3"
+        },
+        lowOutcome: {
+          badge: "⚠️ Golpe a la Caja",
+          title: "Pasas con lo Justo",
+          text: "Al tener la liquidez justa, este imprevisto tensa tu mes a mes y te obliga a vigilar de cerca tu efectivo antes de 2027.",
+          delta: { shield: -5, energy: -5, compass: 0 },
+          sprite: "normal"
+        }
+      },
+      twoFutures: {
+        currentTitle: "Ruta Sin Cambios",
+        currentAge: "A los 85 años",
+        currentMetric: "Se agota el ahorro líquido",
+        currentDetail: "Quedarían $32,439 de gastos sin cubrir entre los 85 y 91 años, arrastrando deuda cara y caja justa para 2027.",
+        improvedTitle: "Tu Nueva Estrategia",
+        improvedAge: "De hoy a los 91 años",
+        improvedMetric: "+$20,231/año al retiro",
+        improvedDetail: "Casa de 2027 protegida en cuenta separada, seguro de $1M activo y retiro blindado hasta los 91 años."
+      },
+      firstSteps: [
+        {
+          title: "Separar en cuenta aparte el efectivo de la casa (2027)",
+          detail: "Definir cuánto va a tu reserva de seguridad ($46,530–$55,836) y cuánto a la entrada ($113,300) sin mezclarlo con bolsa.",
+          effort: "Misión Inmediata · +15 Colchón Seguro",
+          sprite: "feliz"
+        },
+        {
+          title: "Activar seguro de responsabilidad civil de $1,000,000",
+          detail: "La acción más sencilla de tu plan para blindar tus $218,500 de patrimonio neto ante cualquier imprevisto.",
+          effort: "Esfuerzo Bajo · +15 Colchón Seguro",
+          sprite: "feliz2"
+        },
+        {
+          title: "Liquidar los $3,500 de tarjeta Amex al 20%",
+          detail: "Eliminar el interés más caro de tu balance para liberar $200/mes antes de comprometer más ahorro.",
+          effort: "Impacto Directo · +18 Holgura Mensual",
+          sprite: "feliz3"
+        }
+      ],
+      followUp: {
+        day3: "¡Día +3 completado, Michael! Ya has separado tus cuentas por objetivo y has iniciado el blindaje de tu patrimonio sin tocar tus inversiones a largo plazo.",
+        day30: "¡Día +30 completado! Has ganado visibilidad total sobre tu liquidez para enero de 2027 y tu plan de ahorro automático avanza sin ahogar tu día a día."
+      }
+    };
+
+    /**
+     * =========================================================================
+     * ESTADO DEL JUEGO Y MOTOR DEL MAPA DE MONTAÑA
+     * =========================================================================
+     */
+    const game = {
+      step: "intro", // intro | concern | buffs | stage | event | futures | firstStep | mission
+      stats: { shield: 45, energy: 50, compass: 40 },
+      selectedConcern: null,
+      stageIndex: 0,
+      cardFlipped: false,
+      lastCardOutcome: null,
+      selectedActionIndex: 0,
+      simDay: 0
+    };
+
+    let typingTimer = null;
+
+    function getCurrentMountainNode() {
+      if (["intro", "concern", "buffs"].includes(game.step)) return 0;
+      if (game.step === "stage") return Math.min(3, game.stageIndex + 1);
+      if (game.step === "event") return 3;
+      return 4;
+    }
+
+    function updateMountainMap() {
+      const currentNode = getCurrentMountainNode();
+      const nodesGroup = document.getElementById("mountain-nodes");
+      const hiker = document.getElementById("michael-hiker");
+      const trailActive = document.getElementById("trail-active");
+      const trailBg = document.getElementById("trail-bg");
+
+      if (!nodesGroup || !hiker) return;
+
+      if (trailActive && trailBg && trailBg.getTotalLength) {
+        const totalLen = trailBg.getTotalLength();
+        trailActive.style.strokeDasharray = totalLen;
+        const pct = currentNode / (MOUNTAIN_CAMPS.length - 1);
+        trailActive.style.strokeDashoffset = totalLen * (1 - pct);
+      }
+
+      nodesGroup.innerHTML = MOUNTAIN_CAMPS.map(camp => {
+        const isDone = camp.id < currentNode;
+        const isCurrent = camp.id === currentNode;
+
+        let circleFill = "#FFFFFF";
+        let strokeColor = "#BAE6FD";
+        let iconChar = "🔒";
+
+        if (isDone) {
+          circleFill = "#10B981";
+          strokeColor = "#A7F3D0";
+          iconChar = "✓";
+        } else if (isCurrent) {
+          circleFill = "#38BDF8";
+          strokeColor = "#0EA5E9";
+          iconChar = camp.id === 4 ? "🚩" : "★";
+        } else if (camp.id === 4) {
+          iconChar = "🚩";
+        }
+
+        const labelClass = isDone ? "camp-label done" : (isCurrent ? "camp-label active" : "camp-label");
+
+        return `
+          <g class="camp-node" transform="translate(${camp.x}, ${camp.y})">
+            <circle cx="0" cy="0" r="${isCurrent ? 10 : 8.5}" fill="${circleFill}" stroke="${strokeColor}" stroke-width="2" />
+            <text x="0" y="3" text-anchor="middle" font-size="8.5" font-weight="800" fill="${isDone || isCurrent ? '#FFFFFF' : '#64748B'}">${iconChar}</text>
+            <text x="0" y="16" class="${labelClass}">${camp.label}</text>
+          </g>
+        `;
+      }).join("");
+
+      const targetCamp = MOUNTAIN_CAMPS[currentNode] || MOUNTAIN_CAMPS[0];
+      hiker.setAttribute("transform", `translate(${targetCamp.x}, ${targetCamp.y - 2})`);
+    }
+
+    function clamp(val) {
+      return Math.max(10, Math.min(100, val));
+    }
+
+    function applyStatDelta(delta) {
+      if (!delta) return;
+      game.stats.shield = clamp(game.stats.shield + (delta.shield || 0));
+      game.stats.energy = clamp(game.stats.energy + (delta.energy || 0));
+      game.stats.compass = clamp(game.stats.compass + (delta.compass || 0));
+
+      updateHUD(true);
+      showFloatingToast(delta);
+    }
+
+    function updateHUD(animateBump = false) {
+      const mapping = [
+        { key: "shield", valId: "val-shield", cardId: "card-shield", barId: "bar-shield" },
+        { key: "energy", valId: "val-energy", cardId: "card-energy", barId: "bar-energy" },
+        { key: "compass", valId: "val-compass", cardId: "card-compass", barId: "bar-compass" }
+      ];
+
+      mapping.forEach(item => {
+        const valEl = document.getElementById(item.valId);
+        const cardEl = document.getElementById(item.cardId);
+        const barEl = document.getElementById(item.barId);
+        if (valEl && cardEl) {
+          valEl.textContent = game.stats[item.key];
+          if (barEl) barEl.style.width = game.stats[item.key] + "%";
+          if (animateBump) {
+            cardEl.classList.remove("bump");
+            void cardEl.offsetWidth;
+            cardEl.classList.add("bump");
+          }
+        }
+      });
+
+      updateMountainMap();
+    }
+
+    function showFloatingToast(delta) {
+      const parts = [];
+      if (delta.shield) parts.push(`🛡️ Colchón ${delta.shield > 0 ? '+' : ''}${delta.shield}`);
+      if (delta.energy) parts.push(`⚡ Holgura ${delta.energy > 0 ? '+' : ''}${delta.energy}`);
+      if (delta.compass) parts.push(`🧭 Rumbo ${delta.compass > 0 ? '+' : ''}${delta.compass}`);
+      if (parts.length === 0) return;
+
+      const toast = document.createElement("div");
+      toast.className = "delta-float";
+      toast.innerHTML = parts.join(" &nbsp;·&nbsp; ");
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    }
+
+    function renderNoraDialogue(fullText, spriteKey = "normal", happyStyle = false, speakerLabel = NORA_ROLE_LABEL) {
+      const imgPath = NORA_SPRITES[spriteKey] || NORA_SPRITES.normal;
+      return `
+        <div class="nora-dialogue ${happyStyle ? 'happy' : ''}">
+          <div class="nora-avatar-box bounce">
+            <img src="${imgPath}" alt="NORA" />
+          </div>
+          <div style="flex:1;">
+            <div class="nora-speaker">
+              <i data-lucide="compass" style="width:13px;height:13px;"></i>
+              <span>${speakerLabel}</span>
+            </div>
+            <p class="nora-speech typing-cursor" id="nora-type-target" data-fulltext="${fullText.replace(/"/g, '&quot;')}"></p>
+          </div>
+        </div>
+      `;
+    }
+
+    function startTypewriter() {
+      if (typingTimer) clearInterval(typingTimer);
+      const el = document.getElementById("nora-type-target");
+      if (!el) return;
+      const text = el.getAttribute("data-fulltext") || "";
+      el.textContent = "";
+      let idx = 0;
+      typingTimer = setInterval(() => {
+        el.textContent += text.charAt(idx);
+        idx++;
+        if (idx >= text.length) {
+          clearInterval(typingTimer);
+          el.classList.remove("typing-cursor");
+        }
+      }, 15);
+    }
+
+    function animateBars() {
+      requestAnimationFrame(() => {
+        document.querySelectorAll(".bar-fill[data-target]").forEach(el => {
+          el.style.width = el.getAttribute("data-target") + "%";
+        });
+      });
+    }
+
+    /**
+     * =========================================================================
+     * RENDERIZADO DE PANTALLAS RPG (MICHAEL CARTER)
+     * =========================================================================
+     */
+    function render() {
+      updateHUD(false);
+      const container = document.getElementById("screen-container");
+      const m = MICHAEL_DATA;
+
+      // 1. CAMPAMENTO BASE: FICHA DE PERSONAJE E INICIO
+      if (game.step === "intro") {
+        container.innerHTML = `
+          <div class="screen-body">
+            <div class="char-sheet">
+              <div class="char-top">
+                <div>
+                  <div style="font-size:11px;font-weight:700;opacity:0.9;text-transform:uppercase;letter-spacing:0.06em;">Campamento Base · ${m.city}</div>
+                  <div style="font-size:22px;font-weight:800;margin-top:2px;">${m.name}</div>
+                </div>
+                <span class="char-class">Nvl ${m.age} · ${m.rpgClass}</span>
+              </div>
+              <div style="font-size:13.5px;line-height:1.45;">
+                <strong>Cumbre del Plan:</strong> ${m.mainQuest}
+              </div>
+              <div class="char-stats-mini">
+                <div>
+                  <div style="font-size:10.5px;opacity:0.85;">Ingresos</div>
+                  <div style="font-size:14px;font-weight:800;">$180k/año</div>
+                </div>
+                <div>
+                  <div style="font-size:10.5px;opacity:0.85;">Efectivo hoy</div>
+                  <div style="font-size:14px;font-weight:800;">$30,000</div>
+                </div>
+                <div>
+                  <div style="font-size:10.5px;opacity:0.85;">Meta Casa</div>
+                  <div style="font-size:14px;font-weight:800;">Ene 2027</div>
+                </div>
+              </div>
+            </div>
+
+            ${renderNoraDialogue(m.introSpeech, "normal", true)}
+          </div>
+
+          <button class="btn-primary" onclick="game.step='concern';render();">
+            Iniciar ascenso desde el Campamento Base
+            <i data-lucide="compass" style="width:18px;height:18px;"></i>
+          </button>
+        `;
+        lucide.createIcons();
+        startTypewriter();
+        return;
+      }
+
+      // 2. CAMPAMENTO BASE: ELECCIÓN DE PRIORIDAD
+      if (game.step === "concern") {
+        container.innerHTML = `
+          <div class="screen-body">
+            <div>
+              <span class="eyebrow">Campamento Base · Brújula</span>
+              <h1 style="margin-top:3px;">¿Qué misión quieres priorizar?</h1>
+            </div>
+
+            ${renderNoraDialogue("Elige qué objetivo te daría más tranquilidad hoy para trazar el orden de nuestras etapas.", "normal")}
+
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              ${m.concerns.map(con => `
+                <button class="option-btn" onclick="selectConcern('${con.id}')">
+                  <div style="flex:1;">
+                    <span class="option-title">${con.label}</span>
+                    <span class="option-desc">${con.desc}</span>
+                    <div class="stat-tags">
+                      ${con.delta.shield ? `<span class="stat-tag tag-pos">+${con.delta.shield} Colchón Seguro</span>` : ''}
+                      ${con.delta.energy ? `<span class="stat-tag tag-pos">+${con.delta.energy} Holgura Mensual</span>` : ''}
+                      ${con.delta.compass ? `<span class="stat-tag tag-pos">+${con.delta.compass} Rumbo Futuro</span>` : ''}
+                    </div>
+                  </div>
+                  <i data-lucide="chevron-right" style="width:18px;height:18px;color:var(--sky-accent);flex-shrink:0;"></i>
+                </button>
+              `).join("")}
+            </div>
+          </div>
+        `;
+        lucide.createIcons();
+        startTypewriter();
+        return;
+      }
+
+      // 3. CAMPAMENTO BASE: VENTAJAS INICIALES
+      if (game.step === "buffs") {
+        container.innerHTML = `
+          <div class="screen-body">
+            <div>
+              <span class="eyebrow">Equipo de expedición</span>
+              <h1 style="margin-top:3px;">Tus 3 Ventajas Activas</h1>
+            </div>
+
+            ${renderNoraDialogue(`Con el foco en "${game.selectedConcern.label.toLowerCase()}", ya cuentas con estas tres fortalezas:`, "feliz", true)}
+
+            <div class="card">
+              ${m.buffs.map(b => `
+                <div class="buff-row">
+                  <div class="buff-icon">
+                    <i data-lucide="${b.icon}" style="width:18px;height:18px;"></i>
+                  </div>
+                  <div style="flex:1;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
+                      <span style="font-size:13.5px;font-weight:800;color:var(--navy);">${b.title}</span>
+                      <span class="pill pill-green">${b.bonus}</span>
+                    </div>
+                    <p style="font-size:12px;color:var(--slate);margin-top:2px;">${b.detail}</p>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+
+          <button class="btn-primary" onclick="game.stageIndex=0;game.cardFlipped=false;game.step='stage';render();">
+            Subir a la Etapa 1
+            <i data-lucide="arrow-up-right" style="width:18px;height:18px;"></i>
+          </button>
+        `;
+        lucide.createIcons();
+        startTypewriter();
+        return;
+      }
+
+      // 4. ETAPAS CON CARTAS VOLTEABLES 3D TIPO REIGNS
+      if (game.step === "stage") {
+        const orderedKeys = game.selectedConcern.stageOrder;
+        const stageKey = orderedKeys[game.stageIndex];
+        const st = m.stages[stageKey];
+        const isLast = game.stageIndex === orderedKeys.length - 1;
+        const out = game.lastCardOutcome;
+
+        container.innerHTML = `
+          <div class="screen-body">
+            ${renderNoraDialogue(st.noraHint, "normal", false, `NORA · Etapa ${game.stageIndex + 1} de ${orderedKeys.length}`)}
+
+            <div class="reigns-scene">
+              <div class="reigns-card ${game.cardFlipped ? 'flipped' : ''}" id="reigns-card-el">
+                
+                <!-- CARA FRONTAL DE LA CARTA -->
+                <div class="reigns-face reigns-front">
+                  <div style="text-align:center;">
+                    <span class="pill pill-sky">${st.cardTag}</span>
+                  </div>
+
+                  <div class="reigns-emblem">
+                    <i data-lucide="${st.icon}" style="width:36px;height:36px;"></i>
+                  </div>
+
+                  <div style="text-align:center;">
+                    <h2>${st.title}</h2>
+                    <p class="subtitle" style="margin-top:3px;">Toca una decisión para girar la carta</p>
+                  </div>
+
+                  <div style="display:flex;flex-direction:column;gap:8px;background:var(--sky-ultra-soft);padding:12px;border-radius:14px;border:1px solid var(--border-soft);">
+                    ${st.bars.map(b => `
+                      <div>
+                        <div class="bar-item-head">
+                          <span style="color:var(--slate);">${b.label}</span>
+                          <span style="color:var(--navy);">${b.display}</span>
+                        </div>
+                        <div class="bar-track">
+                          <div class="bar-fill ${b.color}" data-target="${b.pct}"></div>
+                        </div>
+                      </div>
+                    `).join("")}
+                  </div>
+
+                  <div class="reigns-choices">
+                    ${st.options.map((opt, idx) => `
+                      <button class="swipe-btn ${!opt.simulated ? 'warn-choice' : ''}" onclick="flipStageCard('${stageKey}', ${idx})">
+                        <div style="flex:1;">
+                          <div class="swipe-dir-badge">${opt.dir}</div>
+                          <span class="option-title">${opt.label}</span>
+                          <span class="option-desc">${opt.desc}</span>
+                        </div>
+                        <i data-lucide="rotate-cw" style="width:17px;height:17px;color:${opt.simulated ? 'var(--sky-accent)' : 'var(--amber)'};flex-shrink:0;"></i>
+                      </button>
+                    `).join("")}
+                  </div>
+                </div>
+
+                <!-- REVERSO DE LA CARTA (RESULTADO AL GIRAR 180deg) -->
+                <div class="reigns-face reigns-back ${out && !out.simulated ? 'blocked-back' : ''}">
+                  ${out ? `
+                    <div>
+                      <span class="pill ${out.simulated ? 'pill-sky' : 'pill-amber'}">
+                        ${out.simulated ? 'Resultado de tu carta' : 'Fuera de tu plan · Consulta a tu gestor'}
+                      </span>
+                    </div>
+
+                    <div class="back-nora-badge">
+                      <img src="${NORA_SPRITES[out.sprite] || NORA_SPRITES.feliz}" alt="NORA" />
+                    </div>
+
+                    <div>
+                      <h2>${out.resultTitle}</h2>
+                      ${out.simulated && out.delta ? `
+                        <div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:8px;">
+                          ${out.delta.shield ? `<span class="stat-tag ${out.delta.shield > 0 ? 'tag-pos' : 'tag-neg'}">🛡️ Colchón ${out.delta.shield > 0 ? '+' : ''}${out.delta.shield}</span>` : ''}
+                          ${out.delta.energy ? `<span class="stat-tag ${out.delta.energy > 0 ? 'tag-pos' : 'tag-neg'}">⚡ Holgura ${out.delta.energy > 0 ? '+' : ''}${out.delta.energy}</span>` : ''}
+                          ${out.delta.compass ? `<span class="stat-tag ${out.delta.compass > 0 ? 'tag-pos' : 'tag-neg'}">🧭 Rumbo ${out.delta.compass > 0 ? '+' : ''}${out.delta.compass}</span>` : ''}
+                        </div>
+                      ` : ''}
+                      <p style="font-size:13.5px;color:var(--slate);margin-top:10px;line-height:1.55;">${out.resultText}</p>
+                    </div>
+
+                    ${out.simulated ? `
+                      <button class="btn-primary" onclick="advanceAfterCard(${isLast})">
+                        ${isLast ? 'Avanzar hacia la tormenta final' : `Subir a Etapa ${game.stageIndex + 2}`}
+                        <i data-lucide="arrow-right" style="width:17px;height:17px;"></i>
+                      </button>
+                    ` : `
+                      <button class="btn-amber" onclick="unflipBlockedCard()">
+                        <i data-lucide="rotate-ccw" style="width:17px;height:17px;"></i>
+                        Volver a la carta y elegir opción del plan
+                      </button>
+                    `}
+                  ` : ''}
+                </div>
+
+              </div>
+            </div>
+          </div>
+        `;
+        lucide.createIcons();
+        animateBars();
+        startTypewriter();
+        return;
+      }
+
+      // 5. CARTA DE TORMENTA ALEATORIA (VOLTEABLE 3D)
+      if (game.step === "event") {
+        const ev = m.randomEvent;
+        const passed = game.stats.shield >= 60;
+        const res = passed ? ev.goodOutcome : ev.lowOutcome;
+
+        container.innerHTML = `
+          <div class="screen-body">
+            ${renderNoraDialogue("¡Cuidado! Se acerca una tormenta imprevista antes de alcanzar la cumbre. Gira la carta para ver cómo resiste tu colchón seguro.", "normal")}
+
+            <div class="reigns-scene">
+              <div class="reigns-card ${game.cardFlipped ? 'flipped' : ''}" id="event-card-el">
+                
+                <!-- FRENTE DE LA CARTA DE TORMENTA -->
+                <div class="reigns-face reigns-front">
+                  <div style="text-align:center;">
+                    <span class="pill pill-amber">${ev.cardTag}</span>
+                  </div>
+
+                  <div class="reigns-emblem" style="background:var(--amber-soft);color:var(--amber);">
+                    <i data-lucide="${ev.icon}" style="width:38px;height:38px;"></i>
+                  </div>
+
+                  <div style="text-align:center;">
+                    <h2>${ev.title}</h2>
+                    <p class="subtitle" style="margin-top:6px;">${ev.desc}</p>
+                  </div>
+
+                  <div style="background:var(--sky-ultra-soft);padding:12px;border-radius:14px;text-align:center;font-size:12.5px;font-weight:700;color:var(--sky-accent);">
+                    Tu Colchón Seguro actual: 🛡️ ${game.stats.shield} / 60 necesarios
+                  </div>
+
+                  <button class="btn-primary" onclick="flipEventCard()">
+                    Girar carta de tormenta
+                    <i data-lucide="rotate-cw" style="width:17px;height:17px;"></i>
+                  </button>
+                </div>
+
+                <!-- REVERSO DE LA CARTA DE TORMENTA -->
+                <div class="reigns-face reigns-back ${!passed ? 'blocked-back' : ''}">
+                  <div>
+                    <span class="pill ${passed ? 'pill-green' : 'pill-amber'}">${res.badge}</span>
+                  </div>
+
+                  <div class="back-nora-badge">
+                    <img src="${NORA_SPRITES[res.sprite]}" alt="NORA" />
+                  </div>
+
+                  <div>
+                    <h2>${res.title}</h2>
+                    <p style="font-size:13.5px;color:var(--slate);margin-top:10px;line-height:1.55;">${res.text}</p>
+                  </div>
+
+                  <button class="btn-primary" onclick="applyStatDelta(${JSON.stringify(res.delta).replace(/"/g, '&quot;')});game.cardFlipped=false;game.step='futures';render();">
+                    ¡Alcanzar La Cumbre!
+                    <i data-lucide="flag" style="width:17px;height:17px;"></i>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        `;
+        lucide.createIcons();
+        startTypewriter();
+        return;
+      }
+
+      // 6. LA CUMBRE: TUS 2 FUTUROS
+      if (game.step === "futures") {
+        const f = m.twoFutures;
+        container.innerHTML = `
+          <div class="screen-body">
+            <div>
+              <span class="eyebrow">🚩 ¡Has llegado a La Cumbre!</span>
+              <h1 style="margin-top:3px;">Tus 2 Futuros</h1>
+            </div>
+
+            ${renderNoraDialogue("Desde lo alto se ve claro el impacto de tus decisiones. Mira cómo cambia tu horizonte:", "feliz2", true)}
+
+            <div class="futures-grid">
+              <div class="future-col">
+                <span class="pill pill-navy" style="align-self:flex-start;">${f.currentTitle}</span>
+                <div style="font-size:11.5px;font-weight:700;color:var(--slate-light);">${f.currentAge}</div>
+                <div style="font-size:15px;font-weight:800;color:var(--slate);">${f.currentMetric}</div>
+                <p style="font-size:12px;color:var(--slate);line-height:1.45;">${f.currentDetail}</p>
+              </div>
+
+              <div class="future-col highlight">
+                <span class="pill pill-sky" style="align-self:flex-start;">${f.improvedTitle}</span>
+                <div style="font-size:11.5px;font-weight:700;color:var(--sky-accent);">${f.improvedAge}</div>
+                <div style="font-size:15px;font-weight:800;color:var(--navy);">${f.improvedMetric}</div>
+                <p style="font-size:12px;color:var(--navy);line-height:1.45;">${f.improvedDetail}</p>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-primary" onclick="game.step='firstStep';render();">
+            Elegir mi Único Primer Paso
+            <i data-lucide="arrow-right" style="width:17px;height:17px;"></i>
+          </button>
+        `;
+        lucide.createIcons();
+        startTypewriter();
+        return;
+      }
+
+      // 7. ÚNICO PRIMER PASO
+      if (game.step === "firstStep") {
+        let orderedSteps = [...m.firstSteps];
+        if (game.selectedConcern) {
+          const recIdx = game.selectedConcern.recommendedActionIndex;
+          if (recIdx > 0 && orderedSteps[recIdx]) {
+            const [picked] = orderedSteps.splice(recIdx, 1);
+            orderedSteps.unshift(picked);
+          }
+        }
+
+        container.innerHTML = `
+          <div class="screen-body">
+            <div>
+              <span class="eyebrow">Compromiso en la Cumbre</span>
+              <h1 style="margin-top:3px;">Tu Único Primer Paso</h1>
+            </div>
+
+            ${renderNoraDialogue("Como tu guía hacia el norte, te recomiendo sellar una sola acción concreta esta semana:", "feliz", true)}
+
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              ${orderedSteps.map((st, idx) => `
+                <button class="option-btn ${game.selectedActionIndex === idx ? 'selected' : ''}"
+                  onclick="game.selectedActionIndex=${idx};render();">
+                  <div style="flex:1;">
+                    ${idx === 0 ? `<span class="pill pill-sky" style="margin-bottom:5px;">Recomendado para ti</span>` : ''}
+                    <span class="option-title">${st.title}</span>
+                    <span class="option-desc">${st.detail}</span>
+                    <span style="display:inline-block;margin-top:5px;font-size:11.5px;font-weight:800;color:var(--sky-accent);">${st.effort}</span>
+                  </div>
+                  <i data-lucide="${game.selectedActionIndex === idx ? 'check-circle-2' : 'circle'}"
+                     style="width:20px;height:20px;color:${game.selectedActionIndex === idx ? 'var(--sky-accent)' : 'var(--border)'};flex-shrink:0;"></i>
+                </button>
+              `).join("")}
+            </div>
+          </div>
+
+          <button class="btn-primary" onclick="confirmFirstStep()">
+            Sellar misión de la semana
+            <i data-lucide="award" style="width:18px;height:18px;"></i>
+          </button>
+        `;
+        lucide.createIcons();
+        startTypewriter();
+        return;
+      }
+
+      // 8. PANEL DE MISIÓN FINAL +3 / +30 DÍAS
+      if (game.step === "mission") {
+        let orderedSteps = [...m.firstSteps];
+        if (game.selectedConcern) {
+          const recIdx = game.selectedConcern.recommendedActionIndex;
+          if (recIdx > 0 && orderedSteps[recIdx]) {
+            const [picked] = orderedSteps.splice(recIdx, 1);
+            orderedSteps.unshift(picked);
+          }
+        }
+        const chosenStep = orderedSteps[game.selectedActionIndex] || orderedSteps[0];
+
+        let sprite = chosenStep.sprite || "feliz";
+        let speech = "¡Cumbre conquistada, Michael! Adelanta el reloj para ver cómo te acompaño en los próximos días.";
+        if (game.simDay === 3) {
+          sprite = "feliz2";
+          speech = m.followUp.day3;
+        } else if (game.simDay === 30) {
+          sprite = "feliz3";
+          speech = m.followUp.day30;
+        }
+
+        container.innerHTML = `
+          <div class="screen-body">
+            <div>
+              <span class="eyebrow">🚩 Expedición Completada</span>
+              <h1 style="margin-top:3px;">Arquitecto Casa 2027</h1>
+            </div>
+
+            ${renderNoraDialogue(speech, sprite, true, game.simDay > 0 ? `NORA · Seguimiento Día +${game.simDay}` : NORA_ROLE_LABEL)}
+
+            <div class="card" style="border-color:var(--sky-primary);background:var(--sky-ultra-soft);">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                <span class="pill pill-green">
+                  <i data-lucide="flag" style="width:12px;height:12px;"></i>
+                  Tu Único Primer Paso
+                </span>
+                ${game.simDay > 0 ? `<span class="pill pill-sky">Día +${game.simDay}</span>` : ''}
+              </div>
+              <div style="font-size:15px;font-weight:800;color:var(--navy);">${chosenStep.title}</div>
+              <p style="font-size:12.5px;color:var(--slate);margin-top:4px;">${chosenStep.detail}</p>
+            </div>
+
+            <div class="card" style="display:flex;flex-direction:column;gap:10px;">
+              <div style="font-size:13.5px;font-weight:800;color:var(--navy);">Simulador de paso del tiempo</div>
+              <div class="sim-grid">
+                <button class="sim-btn ${game.simDay === 3 ? 'active' : ''}" onclick="game.simDay=3;render();">
+                  <i data-lucide="calendar-clock" style="width:16px;height:16px;"></i>
+                  Avanzar +3 días
+                </button>
+                <button class="sim-btn ${game.simDay === 30 ? 'active' : ''}" onclick="game.simDay=30;render();">
+                  <i data-lucide="calendar-check-2" style="width:16px;height:16px;"></i>
+                  Avanzar +30 días
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-secondary" onclick="restartGame()">
+            <i data-lucide="rotate-ccw" style="width:16px;height:16px;"></i>
+            Volver al Campamento Base
+          </button>
+        `;
+        lucide.createIcons();
+        startTypewriter();
+      }
+    }
+
+    /**
+     * =========================================================================
+     * ACCIONES DE CARTA 3D Y PROGRESO
+     * =========================================================================
+     */
+    function selectConcern(concernId) {
+      const con = MICHAEL_DATA.concerns.find(c => c.id === concernId);
+      game.selectedConcern = con;
+      game.selectedActionIndex = 0;
+      applyStatDelta(con.delta);
+      game.step = "buffs";
+      render();
+    }
+
+    function flipStageCard(stageKey, optionIdx) {
+      const st = MICHAEL_DATA.stages[stageKey];
+      const opt = st.options[optionIdx];
+      game.lastCardOutcome = opt;
+      game.cardFlipped = true;
+
+      if (opt.simulated && opt.delta) {
+        applyStatDelta(opt.delta);
+      }
+      render();
+    }
+
+    function unflipBlockedCard() {
+      game.cardFlipped = false;
+      game.lastCardOutcome = null;
+      render();
+    }
+
+    function advanceAfterCard(isLast) {
+      game.cardFlipped = false;
+      game.lastCardOutcome = null;
+      if (isLast) {
+        game.step = "event";
+      } else {
+        game.stageIndex++;
+      }
+      render();
+    }
+
+    function flipEventCard() {
+      game.cardFlipped = true;
+      render();
+    }
+
+    function confirmFirstStep() {
+      applyStatDelta({ shield: 5, energy: 5, compass: 5 });
+      game.simDay = 0;
+      game.step = "mission";
+      render();
+    }
+
+    function restartGame() {
+      game.step = "intro";
+      game.stats = { shield: 45, energy: 50, compass: 40 };
+      game.selectedConcern = null;
+      game.stageIndex = 0;
+      game.cardFlipped = false;
+      game.lastCardOutcome = null;
+      game.selectedActionIndex = 0;
+      game.simDay = 0;
+      render();
+    }
+
+    // Arrancar partida
+    render();
+  </script>
+</body>
+</html>
