@@ -49,8 +49,12 @@
       justify-content: center;
       min-height: 100vh;
       line-height: 1.5;
+      transition: background 0.3s ease;
     }
 
+    /* =========================================================================
+       CONTENEDOR PRINCIPAL + MODO MÓVIL / MODO ORDENADOR
+       ========================================================================= */
     #app-shell {
       width: 100%;
       max-width: 440px;
@@ -61,6 +65,60 @@
       flex-direction: column;
       box-shadow: 0 0 50px rgba(14, 165, 233, 0.16);
       overflow-x: hidden;
+      transition: max-width 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-radius 0.35s ease, margin 0.35s ease;
+    }
+
+    body.desktop-mode #app-shell {
+      max-width: 960px;
+      min-height: calc(100vh - 36px);
+      margin: 18px auto;
+      border-radius: 28px;
+      border: 1.5px solid var(--border);
+    }
+
+    /* =========================================================================
+       SELECTOR FLOTANTE ARRIBA A LA DERECHA (MÓVIL / ORDENADOR)
+       ========================================================================= */
+    .viewport-switcher {
+      position: fixed;
+      top: 10px;
+      right: 12px;
+      z-index: 90;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      padding: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .vp-btn {
+      border: none;
+      background: transparent;
+      color: var(--slate);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 5px 9px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.18s ease;
+    }
+
+    .vp-btn:hover {
+      color: var(--sky-accent);
+    }
+
+    .vp-btn.active {
+      background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
+      color: #FFFFFF;
+      box-shadow: 0 2px 6px rgba(14, 165, 233, 0.25);
     }
 
     /* =========================================================================
@@ -68,13 +126,17 @@
        ========================================================================= */
     .welcome-screen {
       flex: 1;
-      padding: 28px 20px 24px;
+      padding: 44px 20px 24px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 20px;
+      gap: 18px;
       background: linear-gradient(180deg, #E0F2FE 0%, #F4FAFF 45%, #FFFFFF 100%);
       animation: screenEnter 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body.desktop-mode .welcome-screen {
+      padding: 44px 42px 32px;
     }
 
     .welcome-header {
@@ -83,37 +145,39 @@
       align-items: center;
       text-align: center;
       gap: 12px;
-      padding-top: 6px;
     }
 
+    /* Marco del logo encuadrado exactamente igual que la imagen horizontal */
     .welcome-logo-wrap {
+      width: 240px;
+      aspect-ratio: 16 / 9;
       background: #FFFFFF;
       border: 2px solid var(--border);
-      border-radius: 24px;
-      padding: 12px 22px;
+      border-radius: 20px;
+      overflow: hidden;
       box-shadow: var(--shadow-md);
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .welcome-logo-img {
-      height: 68px;
-      width: auto;
-      max-width: 240px;
-      object-fit: contain;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
       display: block;
-      border-radius: 12px;
     }
 
     .welcome-logo-fallback {
+      width: 100%;
+      height: 100%;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
       color: #FFFFFF;
-      padding: 12px 24px;
-      border-radius: 16px;
       font-weight: 800;
       font-size: 24px;
       letter-spacing: 0.08em;
@@ -122,7 +186,7 @@
     .welcome-desc {
       font-size: 13.5px;
       color: var(--slate);
-      max-width: 340px;
+      max-width: 460px;
       line-height: 1.5;
     }
 
@@ -130,6 +194,9 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
     }
 
     .selector-label {
@@ -182,17 +249,25 @@
       align-items: center;
     }
 
-    /* Viñeta dinámica del perfil seleccionado */
+    /* Viñeta dinámica con marco 16:9 exacto para las fotos de families/*.jpg */
     .welcome-vignette {
       background: #FFFFFF;
       border: 2px solid var(--border);
       border-radius: 24px;
-      padding: 18px;
+      padding: 16px;
       box-shadow: var(--shadow-md);
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 13px;
       animation: vignettePop 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body.desktop-mode .welcome-vignette {
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      align-items: center;
+      gap: 20px;
+      padding: 20px;
     }
 
     @keyframes vignettePop {
@@ -200,25 +275,42 @@
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    .vignette-top {
-      display: flex;
-      align-items: center;
-      gap: 13px;
+    /* Marco fotográfico exactamente 16:9 como las imágenes JPG */
+    .family-photo-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid var(--border);
+      background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
+      position: relative;
+      box-shadow: var(--shadow-sm);
     }
 
-    .vignette-avatar {
-      width: 52px;
-      height: 52px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
-      color: #FFFFFF;
-      font-size: 17px;
-      font-weight: 800;
+    .family-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 22%;
+      display: block;
+    }
+
+    .family-photo-fallback {
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
-      box-shadow: var(--shadow-sm);
+      background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
+      color: #FFFFFF;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .vignette-details {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
     }
 
     .vignette-metrics {
@@ -252,51 +344,68 @@
       background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(12px);
       border-bottom: 1.5px solid var(--border);
-      padding: 12px 16px 14px;
+      padding: 42px 16px 12px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+    }
+
+    body.desktop-mode .topbar {
+      padding: 16px 28px 14px;
     }
 
     .topbar-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 10px;
+    }
+
+    body.desktop-mode .topbar-row {
+      padding-right: 165px;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-weight: 800;
-      font-size: 18px;
-      letter-spacing: 0.06em;
-      color: var(--sky-accent);
       cursor: pointer;
     }
 
-    .brand-logo-img {
-      height: 44px;
-      width: 176px;
-      max-width: 48vw;
-      object-fit: cover;
+    /* Marco del logo en la barra superior exactamente 16:9 */
+    .brand-logo-frame {
+      width: 96px;
+      aspect-ratio: 16 / 9;
       border-radius: 10px;
-      display: block;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
       box-shadow: var(--shadow-sm);
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
 
     .brand-fallback {
+      width: 100%;
+      height: 100%;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      gap: 5px;
       background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
       color: #FFFFFF;
-      padding: 6px 12px;
-      border-radius: 10px;
       font-weight: 800;
-      font-size: 15px;
-      letter-spacing: 0.08em;
+      font-size: 13px;
+      letter-spacing: 0.06em;
     }
 
     .expedition-switch-btn {
@@ -306,12 +415,12 @@
       color: var(--sky-accent);
       background: var(--sky-ultra-soft);
       border: 1.5px solid var(--border);
-      padding: 6px 10px;
+      padding: 5px 10px 5px 5px;
       border-radius: 999px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 7px;
       white-space: nowrap;
       transition: all 0.18s ease;
     }
@@ -319,6 +428,25 @@
     .expedition-switch-btn:hover {
       background: var(--sky-soft);
       border-color: var(--sky-primary);
+    }
+
+    /* Miniatura 16:9 exacta en el botón de perfil de la cabecera */
+    .header-thumb-16x9 {
+      width: 38px;
+      aspect-ratio: 16 / 9;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1.5px solid var(--sky-primary);
+      flex-shrink: 0;
+      background: var(--sky-soft);
+    }
+
+    .header-thumb-16x9 img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
     }
 
     /* MAPA DE MONTAÑA SVG */
@@ -382,7 +510,7 @@
     /* Floating Stat Delta Toast */
     .delta-float {
       position: fixed;
-      top: 148px;
+      top: 162px;
       left: 50%;
       transform: translateX(-50%) translateY(0);
       background: var(--sky-accent);
@@ -418,6 +546,10 @@
       animation: screenEnter 0.38s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
+    body.desktop-mode .screen {
+      padding: 22px 34px 24px;
+    }
+
     .screen-body {
       display: flex;
       flex-direction: column;
@@ -442,6 +574,10 @@
       box-shadow: 0 -6px 20px rgba(14, 165, 233, 0.06);
     }
 
+    body.desktop-mode .indicators-dock {
+      padding: 14px 28px 18px;
+    }
+
     .indicators-dock-title {
       font-size: 10.5px;
       font-weight: 800;
@@ -457,6 +593,10 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
+    }
+
+    body.desktop-mode .indicators-grid {
+      gap: 14px;
     }
 
     .indicator-card {
@@ -640,16 +780,42 @@
       box-shadow: var(--shadow-sm);
     }
 
-    /* Character Sheet Card */
+    /* Character Sheet Card con retrato 16:9 exacto en Campamento Base */
     .char-sheet {
       background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
       color: #FFFFFF;
       border-radius: 22px;
-      padding: 17px;
+      padding: 16px;
       box-shadow: var(--shadow-md);
       display: flex;
       flex-direction: column;
-      gap: 11px;
+      gap: 12px;
+    }
+
+    body.desktop-mode .char-sheet {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      align-items: center;
+      gap: 18px;
+      padding: 18px;
+    }
+
+    .char-photo-16x9 {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.55);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.16);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .char-photo-16x9 img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 22%;
+      display: block;
     }
 
     .char-top {
@@ -748,6 +914,12 @@
       flex-direction: column;
       gap: 9px;
       margin-top: 2px;
+    }
+
+    body.desktop-mode .reigns-choices {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
     .swipe-btn {
@@ -986,6 +1158,10 @@
       gap: 10px;
     }
 
+    body.desktop-mode .futures-grid {
+      gap: 16px;
+    }
+
     .future-col {
       background: var(--card-bg);
       border: 1.5px solid var(--border-soft);
@@ -1063,6 +1239,18 @@
   </style>
 </head>
 <body>
+  <!-- SELECTOR PEQUEÑO ARRIBA A LA DERECHA: MODO MÓVIL / MODO ORDENADOR -->
+  <div class="viewport-switcher" role="group" aria-label="Selector de vista">
+    <button id="btn-mode-mobile" class="vp-btn active" onclick="setViewportMode('mobile')" title="Vista móvil">
+      <i data-lucide="smartphone" style="width:12px;height:12px;"></i>
+      Móvil
+    </button>
+    <button id="btn-mode-desktop" class="vp-btn" onclick="setViewportMode('desktop')" title="Vista ordenador">
+      <i data-lucide="monitor" style="width:12px;height:12px;"></i>
+      Ordenador
+    </button>
+  </div>
+
   <div id="app-shell">
     <!-- 1. PANTALLA DE BIENVENIDA (HOME SCREEN) -->
     <section id="welcome-view" class="welcome-screen"></section>
@@ -1071,20 +1259,24 @@
     <header id="map-topbar" class="topbar hidden">
       <div class="topbar-row">
         <div class="brand" onclick="goToWelcome()" title="Volver a la pantalla de inicio">
-          <img
-            src="./norte-logo.jpg"
-            alt="NORTE"
-            class="brand-logo-img"
-            onerror="this.style.display='none';document.getElementById('brand-text-fallback').style.display='inline-flex';"
-          />
-          <span id="brand-text-fallback" class="brand-fallback" style="display:none;">
-            <i data-lucide="compass" style="width:16px;height:16px;"></i>
-            NORTE
-          </span>
+          <div class="brand-logo-frame">
+            <img
+              src="./norte-logo.jpg"
+              alt="NORTE"
+              class="brand-logo-img"
+              onerror="this.style.display='none';document.getElementById('brand-text-fallback').style.display='inline-flex';"
+            />
+            <span id="brand-text-fallback" class="brand-fallback" style="display:none;">
+              <i data-lucide="compass" style="width:14px;height:14px;"></i>
+              NORTE
+            </span>
+          </div>
         </div>
 
         <button class="expedition-switch-btn" onclick="goToWelcome()">
-          <i data-lucide="users" style="width:13px;height:13px;"></i>
+          <span class="header-thumb-16x9">
+            <img id="header-profile-photo" src="./families/michael-carter.jpg" alt="Perfil" />
+          </span>
           <span id="header-profile-label">Michael Carter · Cambiar</span>
         </button>
       </div>
@@ -1175,12 +1367,13 @@
 
     /**
      * =========================================================================
-     * BASE DE DATOS DE LOS 4 PERFILES
+     * BASE DE DATOS DE LOS 4 PERFILES (CON SUS IMÁGENES EN ./families/*.jpg)
      * =========================================================================
      */
     const CASES_DB = {
       "michael-carter": {
         id: "michael-carter",
+        photo: "./families/michael-carter.jpg",
         initials: "MC",
         dropdownLabel: "Michael Carter (Sesión activa)",
         name: "Michael Carter",
@@ -1401,6 +1594,7 @@
 
       "timothy-melanie-weah": {
         id: "timothy-melanie-weah",
+        photo: "./families/weah.jpg",
         initials: "FW",
         dropdownLabel: "Familia Weah (Timothy & Melanie)",
         name: "Familia Weah",
@@ -1621,6 +1815,7 @@
 
       "samantha-lewis": {
         id: "samantha-lewis",
+        photo: "./families/samantha-lewis.jpg",
         initials: "SL",
         dropdownLabel: "Samantha Lewis",
         name: "Samantha Lewis",
@@ -1841,6 +2036,7 @@
 
       "daniel-emily-johnson": {
         id: "daniel-emily-johnson",
+        photo: "./families/johnson.jpg",
         initials: "FJ",
         dropdownLabel: "Familia Johnson (Daniel & Emily)",
         name: "Familia Johnson",
@@ -2069,11 +2265,12 @@
 
     /**
      * =========================================================================
-     * ESTADO DEL JUEGO Y NAVEGACIÓN ENTRE HOME SCREEN Y MAPA
+     * ESTADO DEL JUEGO Y SELECTOR DE VISTA MÓVIL / ORDENADOR
      * =========================================================================
      */
     const game = {
       caseId: "michael-carter",
+      viewportMode: "mobile", // mobile | desktop
       step: "welcome", // welcome | intro | concern | buffs | stage | event | futures | firstStep | mission
       stats: { shield: 45, energy: 50, compass: 40 },
       selectedConcern: null,
@@ -2085,6 +2282,22 @@
     };
 
     let typingTimer = null;
+
+    function setViewportMode(mode) {
+      game.viewportMode = mode;
+      const btnMobile = document.getElementById("btn-mode-mobile");
+      const btnDesktop = document.getElementById("btn-mode-desktop");
+
+      if (mode === "desktop") {
+        document.body.classList.add("desktop-mode");
+        btnDesktop.classList.add("active");
+        btnMobile.classList.remove("active");
+      } else {
+        document.body.classList.remove("desktop-mode");
+        btnMobile.classList.add("active");
+        btnDesktop.classList.remove("active");
+      }
+    }
 
     function getActiveCase() {
       return CASES_DB[game.caseId] || CASES_DB["michael-carter"];
@@ -2140,40 +2353,50 @@
             </span>
           </div>
 
-          <!-- VIÑETA DINÁMICA DEL PERFIL SELECCIONADO -->
+          <!-- VIÑETA DINÁMICA CON MARCO FOTOGRÁFICO 16:9 EXACTO -->
           <div class="welcome-vignette" key="${c.id}">
-            <div class="vignette-top">
-              <div class="vignette-avatar">${c.initials}</div>
-              <div style="flex:1;min-width:0;">
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
-                  <span style="font-size:17px;font-weight:800;color:var(--navy);">${c.name}</span>
-                  <span class="pill pill-sky">${c.ageLabel}</span>
-                </div>
-                <div style="font-size:12.5px;font-weight:700;color:var(--sky-accent);margin-top:2px;">
-                  ${c.city} · ${c.rpgClass}
-                </div>
-              </div>
+            <div class="family-photo-frame">
+              <img
+                src="${c.photo}"
+                alt="${c.name}"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+              />
+              <div class="family-photo-fallback" style="display:none;">${c.initials}</div>
             </div>
 
-            <div class="vignette-metrics">
-              ${c.miniMetrics.map(m => `
+            <div class="vignette-details">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
                 <div>
-                  <div style="font-size:10.5px;font-weight:700;color:var(--slate-light);">${m.label}</div>
-                  <div style="font-size:14px;font-weight:800;color:var(--navy);margin-top:1px;">${m.value}</div>
+                  <div style="font-size:18px;font-weight:800;color:var(--navy);line-height:1.2;">${c.name}</div>
+                  <div style="font-size:12.5px;font-weight:700;color:var(--sky-accent);margin-top:2px;">
+                    ${c.city} · ${c.rpgClass}
+                  </div>
                 </div>
-              `).join("")}
-            </div>
+                <span class="pill pill-sky">${c.ageLabel}</span>
+              </div>
 
-            <div class="vignette-quest">
-              <strong>Objetivo principal:</strong> ${c.mainQuest}
+              <div class="vignette-metrics">
+                ${c.miniMetrics.map(m => `
+                  <div>
+                    <div style="font-size:10.5px;font-weight:700;color:var(--slate-light);">${m.label}</div>
+                    <div style="font-size:14px;font-weight:800;color:var(--navy);margin-top:1px;">${m.value}</div>
+                  </div>
+                `).join("")}
+              </div>
+
+              <div class="vignette-quest">
+                <strong>Objetivo principal:</strong> ${c.mainQuest}
+              </div>
             </div>
           </div>
         </div>
 
-        <button class="btn-primary" onclick="startExpeditionFromWelcome()">
-          Empezar ruta
-          <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
-        </button>
+        <div style="width:100%;max-width:680px;margin:0 auto;">
+          <button class="btn-primary" onclick="startExpeditionFromWelcome()">
+            Empezar ruta
+            <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+          </button>
+        </div>
       `;
 
       lucide.createIcons();
@@ -2288,8 +2511,13 @@
     function updateHUD(animateBump = false) {
       const m = getActiveCase();
       const headerLabel = document.getElementById("header-profile-label");
+      const headerPhoto = document.getElementById("header-profile-photo");
       if (headerLabel) {
         headerLabel.textContent = `${m.shortName} · Cambiar`;
+      }
+      if (headerPhoto) {
+        headerPhoto.src = m.photo;
+        headerPhoto.alt = m.name;
       }
 
       const mapping = [
@@ -2388,28 +2616,34 @@
       const container = document.getElementById("screen-container");
       const m = getActiveCase();
 
-      // 1. CAMPAMENTO BASE: FICHA DE PERSONAJE
+      // 1. CAMPAMENTO BASE: FICHA DE PERSONAJE CON FOTO 16:9
       if (game.step === "intro") {
         container.innerHTML = `
           <div class="screen-body">
             <div class="char-sheet">
-              <div class="char-top">
-                <div>
-                  <div style="font-size:11px;font-weight:700;opacity:0.9;text-transform:uppercase;letter-spacing:0.06em;">Campamento Base · ${m.city}</div>
-                  <div style="font-size:21px;font-weight:800;margin-top:2px;">${m.name}</div>
-                </div>
-                <span class="char-class">${m.ageLabel}</span>
+              <div class="char-photo-16x9">
+                <img src="${m.photo}" alt="${m.name}" />
               </div>
-              <div style="font-size:13.5px;line-height:1.45;">
-                <strong>Cumbre del Plan:</strong> ${m.mainQuest}
-              </div>
-              <div class="char-stats-mini">
-                ${m.miniMetrics.map(mm => `
+
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div class="char-top">
                   <div>
-                    <div style="font-size:10.5px;opacity:0.85;">${mm.label}</div>
-                    <div style="font-size:14px;font-weight:800;">${mm.value}</div>
+                    <div style="font-size:11px;font-weight:700;opacity:0.9;text-transform:uppercase;letter-spacing:0.06em;">Campamento Base · ${m.city}</div>
+                    <div style="font-size:21px;font-weight:800;margin-top:2px;">${m.name}</div>
                   </div>
-                `).join("")}
+                  <span class="char-class">${m.ageLabel}</span>
+                </div>
+                <div style="font-size:13.5px;line-height:1.45;">
+                  <strong>Cumbre del Plan:</strong> ${m.mainQuest}
+                </div>
+                <div class="char-stats-mini">
+                  ${m.miniMetrics.map(mm => `
+                    <div>
+                      <div style="font-size:10.5px;opacity:0.85;">${mm.label}</div>
+                      <div style="font-size:14px;font-weight:800;">${mm.value}</div>
+                    </div>
+                  `).join("")}
+                </div>
               </div>
             </div>
 
