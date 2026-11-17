@@ -30,13 +30,13 @@
       }
     ],
     "mainQuest": "Comprar casa en enero de 2027 sin frenar tu retiro a los 58",
-    "introSpeech": "Bienvenido a tu expedición financiera, Michael, soy NORA, tu guía hacia el norte. Subiremos juntos hasta la cumbre, carta a carta.",
+    "introSpeech": "Hola Michael, soy NORA, tu guía hacia el norte. Avanzaremos carta a carta hacia tu meta.",
     "summitBadge": "Arquitecto Casa 2027",
     "concerns": [
       {
         "id": "casa",
         "label": "Comprar mi casa en enero de 2027",
-        "desc": "Asegurar los $113,300 de entrada sin quedarme sin colchón.",
+        "desc": "Conseguir los $113,300 de entrada sin agotar tu Colchón Seguro.",
         "stageOrder": [
           "liquidez",
           "deuda",
@@ -52,7 +52,7 @@
       {
         "id": "colchon",
         "label": "Proteger mi tranquilidad ante imprevistos",
-        "desc": "Proteger mi sueldo de $180,000 y evitar vender bolsa con prisa.",
+        "desc": "Proteger tu sueldo de $180,000 y evitar vender bolsa con prisa.",
         "stageOrder": [
           "liquidez",
           "deuda",
@@ -68,7 +68,7 @@
       {
         "id": "retiro",
         "label": "Retirarme a los 58 años con holgura",
-        "desc": "Hacer que mis ahorros duren hasta los 91 sin quedarme corto.",
+        "desc": "Lograr que tus ahorros duren hasta los 91 sin quedarte corto.",
         "stageOrder": [
           "retiro",
           "deuda",
@@ -85,20 +85,20 @@
     "buffs": [
       {
         "icon": "briefcase",
-        "title": "Poder de Ingresos ($180,000/año)",
-        "detail": "Ahorras $43,000 anuales entre inversión y retiro. Una base sólida para escalar.",
+        "title": "Potencia de ingresos · $180k/año",
+        "detail": "Ahorras $43,000 anuales entre inversión y retiro. Es tu impulso para escalar la ruta.",
         "bonus": "+15 Capacidad"
       },
       {
         "icon": "gift",
-        "title": "Bonus de Empresa al 100%",
-        "detail": "Capturas íntegros los $7,000 anuales gratuitos que aporta tu empresa a tu retiro.",
+        "title": "Aporte empresarial al 100%",
+        "detail": "Capturas íntegros los $7,000 anuales que aporta tu empresa al retiro. Un refuerzo claro en tu mochila.",
         "bonus": "+$7,000/año"
       },
       {
         "icon": "shield-check",
-        "title": "Carga de Deuda Ligera (6.3%)",
-        "detail": "Tus cuotas actuales apenas consumen un 6.3% de tus ingresos mensuales.",
+        "title": "Carga de deuda ligera · 6.3%",
+        "detail": "Tus cuotas consumen solo 6.3% de tus ingresos mensuales. Te deja margen para avanzar sin peso extra.",
         "bonus": "Bajo Riesgo"
       }
     ],
@@ -107,7 +107,7 @@
         "cardTag": "CARTA DE LIQUIDEZ · 2027",
         "icon": "home",
         "title": "La Entrada de tu Casa",
-        "noraHint": "Tienes $30,000 en efectivo, pero en enero de 2027 necesitas $113,300 para la entrada y $3,500 para tus vacaciones.",
+        "noraHint": "Tienes $30,000 ahora. Para enero de 2027 necesitas $113,300 para la entrada y $3,500 para las vacaciones.",
         "bars": [
           {
             "label": "Efectivo disponible hoy",
@@ -126,7 +126,7 @@
           {
             "dir": "En tu plan",
             "label": "Separar el dinero de la casa de la bolsa",
-            "desc": "Evita vender acciones si el mercado cae justo antes de comprar.",
+            "desc": "Evitarás vender acciones si el mercado cae antes de comprar.",
             "simulated": true,
             "delta": {
               "shield": 15,
@@ -135,7 +135,7 @@
             },
             "sprite": "feliz",
             "resultTitle": "Casa Protegida",
-            "resultText": "Apartar ese dinero evita vender acciones si el mercado cae antes de comprar en 2027. "
+            "resultText": "Separar ese dinero reduce la necesidad de vender si el mercado cae antes de 2027."
           },
           {
             "dir": "Cambio de fecha",
@@ -152,7 +152,7 @@
       "deuda": {
         "cardTag": "CARTA DE DEUDA · 20% ANUAL",
         "icon": "credit-card",
-        "title": "La Tarjeta Amex Platinum",
+        "title": "Tarjeta Amex Platinum",
         "noraHint": "Arrastras $3,500 en tu tarjeta al 20% de interés anual mientras tu flujo anual va $8,336 ajustado.",
         "bars": [
           {
@@ -202,17 +202,17 @@
       "retiro": {
         "cardTag": "CARTA DE HORIZONTE · 58 AÑOS",
         "icon": "compass",
-        "title": "Tu Retiro Anticipado",
+        "title": "Tu Retiro a los 58",
         "noraHint": "Tus ahorros líquidos cubrirían hasta los 85 años (6 años antes del final de tu plan a los 91).",
         "bars": [
           {
-            "label": "Cobertura actual de ahorros líquidos (hasta 85)",
+            "label": "Cobertura líquida actual (hasta 85)",
             "display": "27 años",
             "pct": 82,
             "color": ""
           },
           {
-            "label": "Horizonte completo del plan (hasta 91)",
+            "label": "Horizonte del plan (hasta 91)",
             "display": "33 años",
             "pct": 100,
             "color": "accent"
@@ -222,7 +222,7 @@
           {
             "dir": "En tu plan",
             "label": "Subir el ahorro de retiro por fases tras la casa",
-            "desc": "Ir cerrando la brecha de $20,231/año sin ahogar el presente.",
+            "desc": "Cerrar la brecha de $20,231/año sin ahogar tu presente.",
             "simulated": true,
             "delta": {
               "shield": 10,
@@ -236,12 +236,12 @@
           {
             "dir": "Cambio de edad",
             "label": "Retrasar mi retiro de los 58 a los 62 años",
-            "desc": "Modificar la edad de jubilación registrada en tu plan.",
+            "desc": "Cambiar la edad de retiro registrada en tu plan.",
             "simulated": false,
             "delta": null,
             "sprite": "normal",
             "resultTitle": "Fuera de tu plan",
-            "resultText": "Entendemos que quieras más tiempo, pero retrasar tu retiro a los 62 no está en tu plan. Coméntalo con tu gestor para recalcularlo."
+            "resultText": "No podemos simular ese cambio aquí porque altera la estructura del plan calculado. Habla con tu gestor para recalcular y ver el impacto."
           }
         ]
       }
@@ -250,12 +250,12 @@
       "cardTag": "CARTA DE TORMENTA · INGRESOS",
       "icon": "cloud-lightning",
       "title": "Tu Sueldo Se Interrumpe",
-      "desc": "Imagina que dejas de cobrar durante varios meses. Tus $30,000 en efectivo cubren solo 3.2 meses de gastos esenciales.",
+      "desc": "Si dejas de cobrar varios meses, tus $30,000 en efectivo solo cubren 3.2 meses de gastos esenciales en el Campamento Base.",
       "threshold": 60,
       "goodOutcome": {
         "badge": "🛡️ Colchón Seguro Resistente",
         "title": "Tormenta Superada",
-        "text": "Tu efectivo separado absorbe el golpe sin vender inversiones ni usar la tarjeta Amex al 20%.",
+        "text": "Tu Colchón Seguro absorbe el golpe: no vendes inversiones ni activas la Amex al 20%.",
         "delta": {
           "shield": 5,
           "energy": 5,
@@ -266,7 +266,7 @@
       "lowOutcome": {
         "badge": "⚠️ Caja Justa",
         "title": "Pasas con lo Justo",
-        "text": "Con solo 3.2 meses de gastos en efectivo, tendrías que usar la tarjeta al 20% o vender bolsa con prisa.",
+        "text": "Tu Colchón Seguro se queda corto; tendrías que usar la Amex al 20% o vender bolsa con prisa.",
         "delta": {
           "shield": -5,
           "energy": -5,
@@ -279,7 +279,7 @@
       "currentTitle": "Ruta Sin Cambios",
       "currentAge": "A los 85 años",
       "currentMetric": "Se agota el ahorro líquido",
-      "currentDetail": "Quedarían $32,439 de gastos sin cubrir entre los 85 y 91 años, arrastrando deuda cara y caja justa para 2027.",
+      "currentDetail": "Quedarían $32,439 de gastos sin cubrir entre los 85 y 91 años; llegarías a 2027 con caja justa y deuda cara.",
       "improvedTitle": "Tu Nueva Estrategia",
       "improvedAge": "De hoy a los 91 años",
       "improvedMetric": "+$20,231/año al retiro",
@@ -288,26 +288,26 @@
     "firstSteps": [
       {
         "title": "Separar en cuenta aparte el efectivo de la casa (2027)",
-        "detail": "Definir cuánto va a tu reserva de seguridad ($46,530–$55,836) y cuánto a la entrada ($113,300) sin mezclarlo con bolsa.",
+        "detail": "Decide cuánto va a Reserva de seguridad ($46,530–$55,836) y cuánto a la entrada ($113,300). No mezclar con bolsa.",
         "effort": "Misión Inmediata · +15 Colchón Seguro",
         "sprite": "feliz"
       },
       {
         "title": "Activar seguro de responsabilidad civil de $1,000,000",
-        "detail": "La acción más sencilla de tu plan para proteger tus $218,500 de patrimonio neto ante una reclamación.",
+        "detail": "Contratar $1,000,000 de responsabilidad civil para proteger tus $218,500 de patrimonio neto.",
         "effort": "Esfuerzo Bajo · +15 Colchón Seguro",
         "sprite": "feliz2"
       },
       {
         "title": "Liquidar los $3,500 de tarjeta Amex al 20%",
-        "detail": "Eliminar el interés más caro de tu balance para liberar $200/mes antes de comprometer más ahorro.",
+        "detail": "Pagar los $3,500 de Amex al 20% para eliminar el interés caro y liberar $200/mes.",
         "effort": "Impacto Directo · +18 Holgura Mensual",
         "sprite": "feliz3"
       }
     ],
     "followUp": {
-      "day3": "Día +3, Michael: ¿cómo ha ido tu primer paso? Cuéntame si algo se ha atascado y lo vemos juntos.",
-      "day30": "Día +30, Michael: ¿qué ha cambiado en tu tranquilidad? Revisemos juntos cuánto has avanzado hacia la casa de 2027."
+      "day3": "Día +3, Michael: ¿Cómo fue tu primer paso? Si algo se atascó, lo revisamos juntos.",
+      "day30": "Día +30, Michael: ¿Notas más tranquilidad? Revisemos cuánto avanzaste hacia la casa en 2027, juntos."
     }
   },
   "timothy-melanie-weah": {
@@ -341,13 +341,13 @@
       }
     ],
     "mainQuest": "Proteger a Liam y Josh y financiar su universidad sin frenar vuestro retiro en 2048",
-    "introSpeech": "Bienvenidos, Timothy y Melanie, soy NORA, vuestra guía hacia el norte. Subiremos juntos decidiendo carta a carta sobre vuestro plan.",
+    "introSpeech": "Hola Timothy y Melanie, soy NORA, vuestra guía hacia el norte. Avanzaremos carta a carta para proteger a Liam y Josh y preparar vuestro retiro.",
     "summitBadge": "Guardianes de Liam y Josh",
     "concerns": [
       {
         "id": "proteccion",
         "label": "Proteger a Liam y Josh si falta un sueldo",
-        "desc": "Cubrir el hueco de $1,100,000 en seguros de vida entre los dos.",
+        "desc": "Faltan $1,100,000 en seguros de vida entre ambos.",
         "stageOrder": [
           "proteccion",
           "tarjeta",
@@ -362,8 +362,8 @@
       },
       {
         "id": "universidad",
-        "label": "Financiar la universidad de Liam y Josh",
-        "desc": "Hoy hay $0 en cuentas 529 y faltan $113,509.",
+        "label": "Financiar la universidad",
+        "desc": "Hay $0 en cuentas 529; faltan $113,509 para la meta.",
         "stageOrder": [
           "educacion",
           "tarjeta",
@@ -396,19 +396,19 @@
     "buffs": [
       {
         "icon": "briefcase",
-        "title": "Ingresos Sólidos",
-        "detail": "Ganáis $270,000 al año entre los dos.",
+        "title": "Base Firme de Ingresos",
+        "detail": "Vuestro motor en la ruta: ganáis $270,000 al año entre los dos.",
         "bonus": "$270k/año"
       },
       {
         "icon": "gift",
-        "title": "Ahorro de Empresa al 100%",
-        "detail": "Captáis las dos aportaciones de empresa: $8,000 Timothy y $6,000 Melanie.",
+        "title": "Aportaciones Empresariales",
+        "detail": "Recibís las dos aportaciones de empresa: $8,000 Timothy y $6,000 Melanie.",
         "bonus": "+$14,000/año"
       },
       {
         "icon": "shield-check",
-        "title": "Efectivo Abundante",
+        "title": "Colchón de Efectivo",
         "detail": "Vuestros $150,800 cubren unos 16 meses de gastos esenciales.",
         "bonus": "16 meses"
       }
@@ -418,7 +418,7 @@
         "cardTag": "CARTA DE ESCUDO · PROTECCIÓN",
         "icon": "shield-check",
         "title": "Seguro de Vida Corto",
-        "noraHint": "Timothy tiene $140,000 y Melanie $110,000 de seguro de vida, frente a $750,000 y $600,000 recomendados. Con dos hijos pequeños, es vuestro mayor hueco.",
+        "noraHint": "Tenéis $140,000 (Timothy) y $110,000 (Melanie) en seguro, frente a $750,000 y $600,000 recomendados. Con dos hijos pequeños, ese es vuestro mayor hueco.",
         "bars": [
           {
             "label": "Seguro de vida actual (los dos)",
@@ -437,7 +437,7 @@
           {
             "dir": "En vuestro plan · Esfuerzo bajo",
             "label": "Añadir $235,000 de seguro de vida",
-            "desc": "Levanta uno de los topes que frenan vuestra puntuación.",
+            "desc": "Quita un tope que limita vuestra puntuación.",
             "simulated": true,
             "delta": {
               "shield": 15,
@@ -463,11 +463,11 @@
       "tarjeta": {
         "cardTag": "CARTA DE DEUDA · 18% ANUAL",
         "icon": "credit-card",
-        "title": "La Tarjeta Chase",
-        "noraHint": "Debéis $18,000 en la tarjeta Chase al 18% anual y pagáis $300 al mes. Mientras tanto, $150,800 esperan en efectivo.",
+        "title": "Tarjeta Chase",
+        "noraHint": "Tenéis $18,000 en la tarjeta Chase al 18% y pagáis $300/mes. En efectivo hay $150,800 esperando.",
         "bars": [
           {
-            "label": "Tarjeta Chase al 18% anual",
+            "label": "Deuda en tarjeta · 18% anual",
             "display": "$18,000",
             "pct": 12,
             "color": ""
@@ -483,7 +483,7 @@
           {
             "dir": "En vuestro plan · Ataque directo",
             "label": "Pagar $6,800 de la tarjeta con efectivo",
-            "desc": "Reduce la deuda cara sin tocar vuestra reserva de emergencia.",
+            "desc": "Reduce la deuda cara y protege el Campamento Base.",
             "simulated": true,
             "delta": {
               "shield": 8,
@@ -497,7 +497,7 @@
           {
             "dir": "En vuestro plan · Ritmo actual",
             "label": "Mantener $300 al mes hasta septiembre de 2039",
-            "desc": "Seguir el calendario actual de pago de la tarjeta.",
+            "desc": "Seguir vuestro calendario actual de pago.",
             "simulated": true,
             "delta": {
               "shield": 0,
@@ -514,7 +514,7 @@
         "cardTag": "CARTA FAMILIAR · UNIVERSIDAD",
         "icon": "award",
         "title": "Universidad de Liam y Josh",
-        "noraHint": "Liam empieza la universidad en 2038 y Josh en 2041, y hoy hay $0 en cuentas 529. Faltan $113,509 de financiación.",
+        "noraHint": "Liam empieza la universidad en 2038 y Josh en 2041. Hoy tenéis $0 en cuentas 529; faltan $113,509.",
         "bars": [
           {
             "label": "Ahorrado en cuentas 529 hoy",
@@ -552,7 +552,7 @@
             "delta": null,
             "sprite": "normal",
             "resultTitle": "Fuera de vuestro plan",
-            "resultText": "Entendemos que lo valoréis, pero financiar la universidad con préstamos no está en vuestro plan. Comentadlo con vuestro asesor para recalcularlo."
+            "resultText": "No podemos simular préstamos dentro de este plan porque el modelo no contempla deuda futura. Hablad con vuestro gestor para recalcular ese escenario."
           }
         ]
       }
@@ -560,8 +560,8 @@
     "randomEvent": {
       "cardTag": "CARTA DE TORMENTA · INGRESOS",
       "icon": "cloud-lightning",
-      "title": "Un Sueldo Se Interrumpe",
-      "desc": "Imaginad que Timothy o Melanie dejan de cobrar durante varios meses. Vuestros $150,800 en efectivo cubren unos 16 meses de gastos esenciales.",
+      "title": "Sueldo Interrumpido",
+      "desc": "Imaginad que uno de vosotros deja de cobrar durante varios meses. Vuestros $150,800 en efectivo cubren unos 16 meses de gastos esenciales.",
       "threshold": 60,
       "goodOutcome": {
         "badge": "🛡️ Colchón Seguro Resistente",
@@ -598,27 +598,27 @@
     },
     "firstSteps": [
       {
-        "title": "Pagar $6,800 de la tarjeta Chase al 18%",
-        "detail": "Dejarla en $11,200 con efectivo que hoy está parado.",
+        "title": "Pagar $6,800 de Chase",
+        "detail": "Reducir el saldo a $11,200 con efectivo que tenéis hoy.",
         "effort": "Esfuerzo Medio · +15 Holgura Mensual",
         "sprite": "feliz"
       },
       {
         "title": "Solicitar $235,000 más de seguro de vida",
-        "detail": "Es la acción de esfuerzo bajo que levanta uno de los topes de vuestra puntuación.",
+        "detail": "Acción de esfuerzo bajo que mejora vuestra puntuación.",
         "effort": "Esfuerzo Bajo · +15 Colchón Seguro",
         "sprite": "feliz2"
       },
       {
-        "title": "Contratar un seguro paraguas de $1,000,000",
-        "detail": "Protege vuestro patrimonio de $695,500 ante una reclamación grande.",
+        "title": "Contratar paraguas $1,000,000",
+        "detail": "Protege vuestro patrimonio de $695,500 frente a reclamos grandes.",
         "effort": "Esfuerzo Bajo · +10 Colchón Seguro",
         "sprite": "feliz3"
       }
     ],
     "followUp": {
-      "day3": "Día +3, Timothy y Melanie: ¿cómo ha ido vuestro primer paso? Contadme si algo se ha atascado y lo vemos juntos.",
-      "day30": "Día +30, Timothy y Melanie: ¿qué ha cambiado en vuestra tranquilidad? Revisemos juntos cuánto habéis avanzado hacia el siguiente tramo."
+      "day3": "Día +3, Familia Weah: ¿cómo ha ido vuestro primer paso? Contadme si algo se ha atascado y lo vemos juntos.",
+      "day30": "Día +30, Familia Weah: ¿qué ha cambiado en vuestra tranquilidad? Revisemos juntos cuánto habéis avanzado hacia el siguiente tramo."
     }
   },
   "samantha-lewis": {
@@ -652,13 +652,13 @@
       }
     ],
     "mainQuest": "Retirarte a los 65 años sin que se agoten tus ahorros a los 73",
-    "introSpeech": "Bienvenida, Samantha, soy NORA, tu guía hacia el norte. Subiremos juntas hasta la cumbre decidiendo carta a carta sobre tu plan.",
-    "summitBadge": "Arquitecta de Tu Retiro",
+    "introSpeech": "Hola Samantha. Soy NORA, tu guía en la ruta: iremos carta a carta y decidirás pasos reales para alcanzar tu cumbre.",
+    "summitBadge": "Arquitecta de tu Retiro",
     "concerns": [
       {
         "id": "retiro",
-        "label": "Retirarme a los 65 sin quedarme corta",
-        "desc": "Hoy $0 de tus $60,000 de ahorro va a retiro.",
+        "label": "Retirarme a los 65",
+        "desc": "Hoy $0 de tus $60,000 está destinado a retiro.",
         "stageOrder": [
           "retiro",
           "hogar",
@@ -673,7 +673,7 @@
       },
       {
         "id": "hogar",
-        "label": "Proteger mi casa y mi coche",
+        "label": "Proteger casa y coche",
         "desc": "Tu plan no registra seguro de hogar ni de coche.",
         "stageOrder": [
           "hogar",
@@ -689,8 +689,8 @@
       },
       {
         "id": "cartera",
-        "label": "Repartir mejor mi cartera",
-        "desc": "VTI pesa un 39% de tu cartera de inversión.",
+        "label": "Repartir mejor cartera",
+        "desc": "VTI pesa un 39% de tu cartera.",
         "stageOrder": [
           "cartera",
           "retiro",
@@ -707,20 +707,20 @@
     "buffs": [
       {
         "icon": "briefcase",
-        "title": "Ingresos Fuertes",
-        "detail": "Tu sueldo de $250,000 al año sostiene a tu familia.",
+        "title": "Base de Ingresos",
+        "detail": "Tu sueldo de $250,000 al año es el motor que sostiene a tu familia en la ruta.",
         "bonus": "$250k/año"
       },
       {
         "icon": "shield-check",
-        "title": "Escudo Sin Deudas",
-        "detail": "No debes nada y tienes seguro de vida y paraguas de $2,000,000 cada uno.",
+        "title": "Campamento Sin Deudas",
+        "detail": "No debes nada; además tienes seguro de vida y paraguas por $2,000,000 cada uno.",
         "bonus": "$0 de deuda"
       },
       {
         "icon": "gift",
-        "title": "Ahorro Constante",
-        "detail": "Ahorras $60,000 al año, el 24% de tus ingresos.",
+        "title": "Ahorro en Ruta",
+        "detail": "Ahorras $60,000 al año (24% de tus ingresos), impulso constante para avanzar hacia la cumbre.",
         "bonus": "24%"
       }
     ],
@@ -729,7 +729,7 @@
         "cardTag": "CARTA DE HORIZONTE · 65 AÑOS",
         "icon": "compass",
         "title": "Tu Retiro a los 65",
-        "noraHint": "Ahorras $60,000 al año, pero $0 van a cuentas de retiro. Tu plan agota tus ahorros a los 73 años, no a los 91.",
+        "noraHint": "Ahorras $60,000 al año y $0 van a cuentas de retiro. Con eso, tus ahorros se agotan a los 73, no a los 91.",
         "bars": [
           {
             "label": "Retiro cubierto con tus ahorros (65–73)",
@@ -747,7 +747,7 @@
         "options": [
           {
             "dir": "En tu plan · Ahorro de retiro",
-            "label": "Dirigir parte del ahorro a cuentas de retiro",
+            "label": "Mover parte del ahorro a cuentas de retiro",
             "desc": "Hoy $0 de tus $60,000 anuales van ahí.",
             "simulated": true,
             "delta": {
@@ -767,24 +767,24 @@
             "delta": null,
             "sprite": "normal",
             "resultTitle": "Fuera de tu plan",
-            "resultText": "Entendemos que lo valores, pero retrasar tu retiro a los 70 no está en tu plan. Coméntalo con tu gestor para recalcularlo."
+            "resultText": "No podemos simular ese cambio aquí porque sale de los parámetros registrados en tu plan. Coméntalo con tu gestor para recalcular ese escenario."
           }
         ]
       },
       "hogar": {
         "cardTag": "CARTA DE ESCUDO · HOGAR",
         "icon": "home",
-        "title": "Tu Casa de $900,000",
-        "noraHint": "Tu plan no registra seguro de hogar ni de coche para tu casa de $900,000 y tu Porsche de $80,000.",
+        "title": "Casa · $900,000",
+        "noraHint": "No tienes registrado seguro de hogar ni de auto para tu casa de $900,000 y tu Porsche de $80,000. Esto deja una brecha que afecta tu Escudo.",
         "bars": [
           {
-            "label": "Casa sin seguro registrado",
+            "label": "Casa sin seguro",
             "display": "$900,000",
             "pct": 100,
             "color": "accent"
           },
           {
-            "label": "Coche sin seguro registrado",
+            "label": "Coche sin seguro",
             "display": "$80,000",
             "pct": 9,
             "color": ""
@@ -793,7 +793,7 @@
         "options": [
           {
             "dir": "En tu plan · Primer movimiento",
-            "label": "Registrar un seguro de hogar para tu casa",
+            "label": "Registrar seguro de hogar",
             "desc": "Cierra la brecha de cobertura que marca tu plan.",
             "simulated": true,
             "delta": {
@@ -807,7 +807,7 @@
           },
           {
             "dir": "En tu plan · Sin cambios",
-            "label": "Mantener la situación actual sin cambios",
+            "label": "Mantener situación actual",
             "desc": "Mantener la póliza que aparece en tu presupuesto.",
             "simulated": true,
             "delta": {
@@ -817,15 +817,15 @@
             },
             "sprite": "normal",
             "resultTitle": "Brecha Abierta",
-            "resultText": "Tu presupuesto ya incluye $4,500 al año de seguro, pero el plan no lo registra y sigue en 82."
+            "resultText": "Tu presupuesto ya incluye $4,500 al año de seguro, pero el plan no lo registra y tu puntuación queda en 82."
           }
         ]
       },
       "cartera": {
         "cardTag": "CARTA DE CARTERA · VTI 39%",
         "icon": "trending-up",
-        "title": "Tu Cartera Concentrada",
-        "noraHint": "VTI pesa un 39% de tu cartera y el 85% está en crecimiento. Tu plan propone bajar a 25% y a 80%.",
+        "title": "Cartera Concentrada",
+        "noraHint": "VTI representa 39% de tu cartera y 85% está en crecimiento. Tu ruta sugiere bajar a 25% y 80%.",
         "bars": [
           {
             "label": "Peso de VTI hoy",
@@ -853,7 +853,7 @@
             },
             "sprite": "feliz2",
             "resultTitle": "Cartera Más Repartida",
-            "resultText": "Repartir esos $58,300 baja tu concentración en una sola posición y sube tu puntuación de 82 a 83."
+            "resultText": "Repartir $58,300 baja la concentración, afianza tu rumbo y sube tu puntuación de 82 a 83."
           },
           {
             "dir": "Más riesgo · Fuera de plan",
@@ -863,7 +863,7 @@
             "delta": null,
             "sprite": "normal",
             "resultTitle": "Fuera de tu plan",
-            "resultText": "Entendemos que lo valores, pero subir tu mezcla de crecimiento al 90% no está en tu plan. Coméntalo con tu gestor para recalcularlo."
+            "resultText": "No podemos simular ese cambio porque excede los parámetros de tu ruta actual. Habla con tu gestor para que lo recalcule en tu plan."
           }
         ]
       }
@@ -871,13 +871,13 @@
     "randomEvent": {
       "cardTag": "CARTA DE TORMENTA · INGRESOS",
       "icon": "cloud-lightning",
-      "title": "Tu Sueldo Se Interrumpe",
-      "desc": "Imagina que dejas de cobrar durante varios meses. Tus $80,000 en efectivo cubren unos 7.9 meses de gastos esenciales.",
+      "title": "Sueldo Interrumpido",
+      "desc": "Te quedas sin sueldo varios meses. En tu Campamento Base, tus $80,000 en efectivo cubren unos 7.9 meses de gastos esenciales.",
       "threshold": 60,
       "goodOutcome": {
         "badge": "🛡️ Colchón Seguro Resistente",
         "title": "Tormenta Superada",
-        "text": "Tu efectivo sostiene tus gastos esenciales unos 7.9 meses sin vender inversiones, y tu seguro por incapacidad respalda tu sueldo.",
+        "text": "Tus $80,000 cubren unos 7.9 meses de gastos esenciales sin tocar inversiones, y el seguro por incapacidad respalda tu sueldo.",
         "delta": {
           "shield": 5,
           "energy": 5,
@@ -888,7 +888,7 @@
       "lowOutcome": {
         "badge": "⚠️ Caja Justa",
         "title": "Pasas con lo Justo",
-        "text": "Tras separar la vacación y el pago de Ethan en agosto de 2027, solo te quedan $750 de margen sobre tu reserva.",
+        "text": "Después de separar la vacación y pagar a Ethan en agosto de 2027, solo te quedan $750 de margen sobre tu reserva.",
         "delta": {
           "shield": -5,
           "energy": -5,
@@ -901,7 +901,7 @@
       "currentTitle": "Ruta Sin Cambios",
       "currentAge": "A los 73 años",
       "currentMetric": "Se agotan tus ahorros",
-      "currentDetail": "Quedarían $1,448,673 de gastos sin cubrir hasta los 91 años, con $0 hoy en cuentas de retiro.",
+      "currentDetail": "Quedarían $1,448,673 de gastos sin cubrir hasta los 91 años; hoy tienes $0 en cuentas de retiro.",
       "improvedTitle": "Tu Nueva Estrategia",
       "improvedAge": "De hoy a los 91 años",
       "improvedMetric": "Ahorro hacia cuentas de retiro",
@@ -910,26 +910,26 @@
     "firstSteps": [
       {
         "title": "Registrar el seguro de hogar de tu casa",
-        "detail": "Es el primer movimiento de tu plan: sube tu puntuación de 82 a 84.",
+        "detail": "Primer movimiento: sube tu puntuación de 82 a 84.",
         "effort": "Esfuerzo Medio · +12 Colchón Seguro",
         "sprite": "feliz"
       },
       {
         "title": "Abrir un IRA tradicional deducible",
-        "detail": "Puedes aportar hasta $7,500 al año y hoy llevas $0.",
+        "detail": "Aportar hasta $7,500/año; hoy aportas $0.",
         "effort": "Esfuerzo Medio · +20 Rumbo Futuro",
         "sprite": "feliz3"
       },
       {
         "title": "Revisar con tu asesor bajar VTI al 25%",
-        "detail": "Son unos $58,300 de tu cartera, un paso de esfuerzo alto.",
+        "detail": "Son $58,300 de tu cartera; requiere esfuerzo alto.",
         "effort": "Esfuerzo Alto · +8 Rumbo Futuro",
         "sprite": "feliz2"
       }
     ],
     "followUp": {
-      "day3": "Día +3, Samantha: ¿cómo ha ido tu primer paso? Cuéntame si algo se ha atascado y lo vemos juntas.",
-      "day30": "Día +30, Samantha: ¿qué ha cambiado en tu tranquilidad? Revisemos juntas cuánto has avanzado hacia el siguiente tramo."
+      "day3": "Día +3, Samantha: ¿cómo fue tu primer paso? Cuéntame si algo se atascó y lo vemos juntas.",
+      "day30": "Día +30, Samantha: ¿notas más tranquilidad desde entonces? Revisemos juntas cuánto has avanzado hacia la próxima etapa."
     }
   },
   "daniel-emily-johnson": {
@@ -963,7 +963,7 @@
       }
     ],
     "mainQuest": "Proteger a Oliver y Sophia y retiraros en 2044 con ahorros suficientes",
-    "introSpeech": "Bienvenidos, Daniel y Emily, soy NORA, vuestra guía hacia el norte. Subiremos juntos decidiendo carta a carta sobre vuestro plan.",
+    "introSpeech": "Hola Daniel y Emily, soy NORA, vuestra guía hacia el norte. Subiremos la ruta carta a carta y tomaremos decisiones reales.",
     "summitBadge": "Guardianes de Oliver y Sophia",
     "concerns": [
       {
@@ -985,7 +985,7 @@
       {
         "id": "retiro",
         "label": "Retiraros en 2044 con ahorros suficientes",
-        "desc": "Hoy no entra nada en vuestros dos 401(k).",
+        "desc": "Ahora mismo no aportáis nada a vuestros dos 401(k).",
         "stageOrder": [
           "retiro",
           "proteccion",
@@ -1018,20 +1018,20 @@
     "buffs": [
       {
         "icon": "briefcase",
-        "title": "Ingresos Sólidos",
-        "detail": "Ganáis $280,000 al año entre los dos.",
+        "title": "Base de ingresos",
+        "detail": "Tenéis $280,000/año como base sólida en vuestra ruta.",
         "bonus": "$280k/año"
       },
       {
         "icon": "award",
-        "title": "Universidad en Marcha",
-        "detail": "Ya hay $30,000 en el 529 y aportáis $8,000 al año.",
+        "title": "Universidad en marcha",
+        "detail": "Hay $30,000 en el 529 y aportáis $8,000 al año para los niños.",
         "bonus": "+$8,000/año"
       },
       {
         "icon": "gift",
-        "title": "Flujo Libre Positivo",
-        "detail": "Os quedan $15,032 al año libres tras gastos y ahorro.",
+        "title": "Holgura positiva",
+        "detail": "Os quedan $15,032 al año libres tras gastos y ahorro, margen en la ruta.",
         "bonus": "+$15,032/año"
       }
     ],
@@ -1039,17 +1039,17 @@
       "proteccion": {
         "cardTag": "CARTA DE ESCUDO · PROTECCIÓN",
         "icon": "shield-check",
-        "title": "Seguro de Vida Corto",
+        "title": "Seguro de Vida Familiar",
         "noraHint": "Daniel tiene $250,000 y Emily $200,000 de seguro de vida. Os faltan $1,350,000 y $1,000,000 para el mínimo recomendado.",
         "bars": [
           {
-            "label": "Seguro de vida actual (los dos)",
+            "label": "Seguro de vida actual (ambos)",
             "display": "$450,000",
             "pct": 16,
             "color": ""
           },
           {
-            "label": "Mínimo recomendado (los dos)",
+            "label": "Mínimo recomendado (ambos)",
             "display": "$2,800,000",
             "pct": 100,
             "color": "accent"
@@ -1059,7 +1059,7 @@
           {
             "dir": "En vuestro plan · Esfuerzo bajo",
             "label": "Añadir $1,166,000 de seguro de vida",
-            "desc": "Es el movimiento que más sube vuestra puntuación.",
+            "desc": "Sube vuestra protección familiar y la puntuación.",
             "simulated": true,
             "delta": {
               "shield": 15,
@@ -1078,18 +1078,18 @@
             "delta": null,
             "sprite": "normal",
             "resultTitle": "Fuera de vuestro plan",
-            "resultText": "Entendemos que lo valoréis, pero cancelar vuestras pólizas actuales no está en vuestro plan. Comentadlo con vuestro asesor para recalcularlo."
+            "resultText": "Entendemos que lo valoréis. No podemos simular cancelar vuestras pólizas aquí; hablad con vuestro asesor para recalcular ese escenario."
           }
         ]
       },
       "retiro": {
         "cardTag": "CARTA DE HORIZONTE · 2044",
         "icon": "compass",
-        "title": "Vuestro Retiro en 2044",
-        "noraHint": "Hoy no entra nada en vuestros dos 401(k), aunque cada uno podría aportar $24,500 al año. Faltan $1,427,456 para retiraros en 2044.",
+        "title": "Vuestro Retiro 2044",
+        "noraHint": "Hoy no aportáis a vuestros dos 401(k); cada uno podría poner $24,500 al año. Falta $1,427,456 para retiraros en 2044.",
         "bars": [
           {
-            "label": "Gasto de retiro cubierto por ingresos",
+            "label": "Cobertura por ingresos",
             "display": "49%",
             "pct": 49,
             "color": ""
@@ -1105,7 +1105,7 @@
           {
             "dir": "En vuestro plan · Ahorro de retiro",
             "label": "Destinar $15,032 al año a ahorro de retiro",
-            "desc": "Es todo el flujo libre que genera vuestro plan.",
+            "desc": "Usa todo el flujo libre del plan.",
             "simulated": true,
             "delta": {
               "shield": 5,
@@ -1124,15 +1124,15 @@
             "delta": null,
             "sprite": "normal",
             "resultTitle": "Fuera de vuestro plan",
-            "resultText": "Entendemos que lo valoréis, pero retrasar el retiro de Daniel hasta los 65 no está en vuestro plan. Comentadlo con vuestro asesor para recalcularlo."
+            "resultText": "No podemos simular ese cambio aquí porque sale del modelo actual. Hablad con vuestro gestor para recalcular este escenario."
           }
         ]
       },
       "caja": {
         "cardTag": "CARTA DE LIQUIDEZ · 1.4 MESES",
         "icon": "credit-card",
-        "title": "Vuestra Caja y la Tarjeta",
-        "noraHint": "Vuestro efectivo de $19,000 cubre 1.4 meses de gastos, y la tarjeta Chase cobra un 24.9% anual sobre $18,000.",
+        "title": "Vuestra Caja y Tarjeta",
+        "noraHint": "Con $19,000 en caja tenéis 1.4 meses de gastos. La tarjeta Chase aplica 24.9% anual sobre $18,000.",
         "bars": [
           {
             "label": "Efectivo disponible hoy",
@@ -1141,7 +1141,7 @@
             "color": ""
           },
           {
-            "label": "Reserva mínima recomendada",
+            "label": "Colchón mínimo recomendado",
             "display": "$106,860",
             "pct": 100,
             "color": "accent"
@@ -1165,7 +1165,7 @@
           {
             "dir": "En vuestro plan · Ritmo actual",
             "label": "Mantener $450 al mes hasta enero de 2034",
-            "desc": "Seguir pagando la tarjeta al ritmo actual del plan.",
+            "desc": "Seguir pagando la tarjeta según el plan hasta enero de 2034.",
             "simulated": true,
             "delta": {
               "shield": 0,
@@ -1182,8 +1182,8 @@
     "randomEvent": {
       "cardTag": "CARTA DE TORMENTA · INGRESOS",
       "icon": "cloud-lightning",
-      "title": "Un Sueldo Se Interrumpe",
-      "desc": "Imaginad que Daniel o Emily dejan de cobrar durante varios meses. Vuestros $19,000 en efectivo cubren solo 1.4 meses de gastos esenciales.",
+      "title": "Sueldo Interrumpido",
+      "desc": "Si uno de vuestros sueldos se interrumpiera varios meses, vuestros $19,000 en efectivo cubren solo 1.4 meses de gastos esenciales.",
       "threshold": 60,
       "goodOutcome": {
         "badge": "🛡️ Colchón Seguro Resistente",
@@ -1212,35 +1212,35 @@
       "currentTitle": "Ruta Sin Cambios",
       "currentAge": "En 2044",
       "currentMetric": "Brecha de $1,427,456",
-      "currentDetail": "Sin aportar a los 401(k), vuestros ingresos cubrirían solo el 49% del gasto de retiro de $124,071 al año.",
+      "currentDetail": "Si no cambiáis aportes a los 401(k), vuestros ingresos cubrirían solo el 49% del gasto de retiro de $124,071 al año.",
       "improvedTitle": "Vuestra Nueva Estrategia",
       "improvedAge": "De hoy a 2044",
       "improvedMetric": "Puntuación 60 de 100",
-      "improvedDetail": "Más seguro de vida, paraguas de $1,000,000 y $15,032 al año hacia el retiro."
+      "improvedDetail": "Incluye más seguro de vida, un paraguas de $1,000,000 y aportar $15,032 al año hacia el retiro."
     },
     "firstSteps": [
       {
         "title": "Solicitar $1,166,000 más de seguro de vida",
-        "detail": "Es el movimiento de esfuerzo bajo que más sube vuestra puntuación, de 52 a 57.",
+        "detail": "Es el movimiento de esfuerzo bajo que más sube vuestra puntuación: 52 → 57.",
         "effort": "Esfuerzo Bajo · +15 Colchón Seguro",
         "sprite": "feliz"
       },
       {
         "title": "Contratar un seguro paraguas de $1,000,000",
-        "detail": "Cubre una reclamación grande que hoy no tenéis cubierta; sube la puntuación de 52 a 56.",
+        "detail": "Cubre una reclamación grande que hoy no tenéis cubierta; sube vuestra puntuación: 52 → 56.",
         "effort": "Esfuerzo Bajo · +10 Colchón Seguro",
         "sprite": "feliz2"
       },
       {
         "title": "Desviar $15,032 al año a ahorro de retiro",
-        "detail": "Es todo vuestro flujo libre; sube la puntuación de 52 a 55.",
+        "detail": "Es todo vuestro flujo libre; sube vuestra puntuación: 52 → 55.",
         "effort": "Esfuerzo Medio · +18 Rumbo Futuro",
         "sprite": "feliz3"
       }
     ],
     "followUp": {
-      "day3": "Día +3, Daniel y Emily: ¿cómo ha ido vuestro primer paso? Contadme si algo se ha atascado y lo vemos juntos.",
-      "day30": "Día +30, Daniel y Emily: ¿qué ha cambiado en vuestra tranquilidad? Revisemos juntos cuánto habéis avanzado hacia el siguiente tramo."
+      "day3": "Día +3, Familia Johnson: ¿Cómo ha ido vuestro primer paso? Contad si algo se ha atascado y lo resolvemos.",
+      "day30": "Día +30, Familia Johnson: ¿Qué ha cambiado en vuestra tranquilidad? Revisemos cuánto habéis avanzado hacia el siguiente tramo."
     }
   }
 }
