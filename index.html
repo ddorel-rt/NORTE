@@ -3506,6 +3506,27 @@
 
     // Iniciar en la Pantalla de Bienvenida con Michael Carter seleccionado por defecto
     render();
+
+    // Carga opcional de cases.json (salida del motor de textos). Si falla la red o el
+    // archivo no es válido, se mantienen los datos incrustados en CASES_DB como respaldo.
+    (function loadCasesFromJson() {
+      function validCase(c) {
+        return c && Array.isArray(c.concerns) && c.concerns.length && c.stages &&
+          Array.isArray(c.firstSteps) && c.firstSteps.length && c.followUp && c.randomEvent &&
+          c.twoFutures && c.initialStats &&
+          c.concerns.every(function (k) { return k.stageOrder.every(function (s) { return c.stages[s]; }); });
+      }
+      fetch("cases.json", { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)); })
+        .then(function (data) {
+          var keys = Object.keys(CASES_DB);
+          if (!keys.every(function (k) { return validCase(data[k]); })) throw new Error("cases.json no válido");
+          keys.forEach(function (k) { CASES_DB[k] = data[k]; });
+          if (game.step === "welcome") { game.stats = Object.assign({}, getActiveCase().initialStats); render(); }
+          console.log("NORTE: datos cargados desde cases.json");
+        })
+        .catch(function (e) { console.warn("NORTE: uso de datos incrustados (" + e.message + ")"); });
+    })();
   </script>
 </body>
 </html>
