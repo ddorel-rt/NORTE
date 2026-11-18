@@ -17,7 +17,7 @@
 6. **Tu único primer paso:** acciones concretas, ordenadas según las jugadas del plan, con esfuerzo e impacto (por ejemplo, *Misión Inmediata · +15 Colchón Seguro*).
 7. **Día +3 y día +30:** botón para avanzar el tiempo y recibir el seguimiento de NORA.
 
-Está pensado para móvil, para alguien que no sabe de finanzas (casi sin jerga) y para que cada familia vea **sus** cifras, no ejemplos genéricos.
+Está pensado tanto para móvil como para ordenador, para alguien que no sabe de finanzas (casi sin jerga) y para que cada familia vea **sus** cifras, no ejemplos genéricos.
 
 ## Los datos
 
