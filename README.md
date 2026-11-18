@@ -5,7 +5,7 @@
 > NORTE convierte el plan financiero de una familia en una partida de montaña. NORA, "tu guía hacia el norte", sube con el cliente carta a carta: decide sobre su propio plan, ve el impacto de cada decisión y termina con **un único primer paso** que puede dar esta semana. Después, simula qué pasa los días +3 y +30.
 
 **Demo (versión móvil y ordenaador):** https://ddorel-rt.github.io/NORTE/
-**Vídeo (2 min):** https://acortar.link/76fcNC
+**Vídeo (2 min):** [ver video](https://acortar.link/76fcNC)
 
 ## Qué hace
 
