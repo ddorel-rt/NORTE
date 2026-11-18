@@ -4,8 +4,8 @@
 
 > NORTE convierte el plan financiero de una familia en una partida de montaña. NORA, "tu guía hacia el norte", sube con el cliente carta a carta: decide sobre su propio plan, ve el impacto de cada decisión y termina con **un único primer paso** que puede dar esta semana. Después, simula qué pasa los días +3 y +30.
 
-**Demo (abre en el móvil):** https://ddorel-rt.github.io/NORTE/
-**Vídeo (2 min):** PEGAR_AQUÍ_EL_ENLACE_DEL_VÍDEO
+**Demo (versión móvil y ordenaador):** https://ddorel-rt.github.io/NORTE/
+**Vídeo (2 min):** https://acortar.link/76fcNC
 
 ## Qué hace
 
@@ -83,7 +83,6 @@ families/ nora/ imágenes
 
 - **Darius**: motor de IA (generación y validación de textos), datos y revisión.
 - **Marc Jordà**: vídeo, HTML del juego y carga de `cases.json`.
-- **Pablo Moreno**: apoyo en todas las partes.
 
 Hemos usado asistentes de IA durante el desarrollo, y los textos finales fueron validados y revisados por el equipo.
 
